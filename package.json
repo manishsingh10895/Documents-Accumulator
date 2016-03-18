@@ -8,6 +8,8 @@
     "watch:dev": "webpack --watch --progress --profile --colors --display-error-details --display-cached",
     "build": "npm run build:dev",
     "build:dev": "webpack --progress --profile --colors --display-error-details --display-cached",
+    "package": "node src/app/package.js",
+    "package-all": "npm run package -- --all",
     "typings-install": "typings install",
     "postinstall": "npm run typings-install",
     "electron": "electron src/app"
@@ -34,6 +36,7 @@
     "compression-webpack-plugin": "^0.3.0",
     "copy-webpack-plugin": "^1.1.1",
     "css-loader": "^0.23.1",
+    "electron-packager": "^5.2.1",
     "es6-promise": "^3.1.2",
     "es6-promise-loader": "^1.0.1",
     "es6-shim": "^0.33.3",

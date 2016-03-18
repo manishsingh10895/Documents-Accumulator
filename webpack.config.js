@@ -37,7 +37,7 @@ module.exports = {
 
     // Config for our build files
     output: {
-        path: helpers.root('dist'),
+        path: helpers.root('src/app/dist'),
         filename: '[name].js',
         sourceMapFilename: '[name].map',
         chunkFilename: '[id].chunk.js'

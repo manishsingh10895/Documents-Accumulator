@@ -52,3 +52,9 @@ __build__/**
 # IDE #
 .idea/
 *.swp
+
+#releases
+release
+
+#dist folder in app
+src/app/dist
