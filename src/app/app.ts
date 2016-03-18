@@ -29,11 +29,10 @@ ENV_PROVIDERS.push(browser.ELEMENT_PROBE_PROVIDERS);
 @View({
     directives: [ROUTER_DIRECTIVES, Login, Home],
     template: `
-    <blog-header></blog-header>
-    <nav-sidebar (NavStateChanged)="moveBody($event)" [navLinks]=links></nav-sidebar>
-    <div class="blog-app" [ngClass]="{shiftLeft:shifted}">
+    <div>
         <router-outlet></router-outlet>
-    </div>`
+    </div>
+    `
 })
 @RouteConfig([
     { path: '/', component: Home, name: 'Home' },
@@ -46,7 +45,7 @@ export class App {
     }
 
     checkAuthentication() {
-        
+
     }
 }
 
