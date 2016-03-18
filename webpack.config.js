@@ -7,7 +7,6 @@ var webpack = require('webpack');
 var helpers = require('./helpers');
 
 var CopyWebpackPlugin = require('copy-webpack-plugin');
-var HtmlWebpackPlugin = require('html-webpack-plugin');
 var ForkCheckerPlugin = require('awesome-typescript-loader').ForkCheckerPlugin;
 
 const ENV = process.env.ENV = process.env.NODE_ENV = 'development';
