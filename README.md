@@ -1,6 +1,6 @@
 # Angular 2 electron app featuring webpack
 
-A working demo of [electron] [angular2] using [Webpack]
+A working demo of [electron] with [angular2] using [Webpack]
 
 ## Run the example
 
