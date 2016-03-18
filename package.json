@@ -1,7 +1,7 @@
 {
-  "name": "angular2-webpack-minimal",
+  "name": "angular2-electron",
   "version": "0.0.0",
-  "description": "Custom Angular 2 Webpack Starter kit",
+  "description": "Angular 2 with Electron and Webpack",
   "main": "",
   "scripts": {
     "watch": "npm run watch:dev",
@@ -17,12 +17,12 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/joaogarin/angular2-webpack-minimal.git"
+    "url": "https://github.com/joaogarin/angular2-electron.git"
   },
   "author": "joaogarin <github@joaogarin.com>",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/joaogarin/angular2-webpack-minimal/issues"
+    "url": "https://github.com/joaogarin/angular2-electron/issues"
   },
   "homepage": "",
   "dependencies": {
@@ -44,14 +44,10 @@
     "exports-loader": "^0.6.3",
     "expose-loader": "^0.7.1",
     "file-loader": "^0.8.5",
-    "html-webpack-plugin": "^2.9.0",
-    "http-server": "^0.8.5",
     "imports-loader": "^0.6.5",
-    "istanbul-instrumenter-loader": "^0.2.0",
     "json-loader": "^0.5.4",
     "raw-loader": "0.5.1",
     "reflect-metadata": "0.1.2",
-    "remap-istanbul": "^0.5.1",
     "rimraf": "^2.5.2",
     "source-map-loader": "^0.1.5",
     "style-loader": "^0.13.0",
