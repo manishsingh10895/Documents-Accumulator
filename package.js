@@ -1,7 +1,7 @@
 "use strict";
 
 var packager = require('electron-packager');
-const pkg = require('./../../package.json');
+const pkg = require('./package.json');
 const argv = require('minimist')(process.argv.slice(2));
 const devDeps = Object.keys(pkg.devDependencies);
 
@@ -13,14 +13,13 @@ const platform = argv.platform || 'darwin';
 
 const DEFAULT_OPTS = {
     dir: './src/app',
-    out: './../../dist',
     name: appName,
     asar: shouldUseAsar,
     ignore: [
     ].concat(devDeps.map(name => `/node_modules/${name}($|/)`))
 };
 
-const icon = 'app';
+const icon = './src/app/app-icon';
 
 if (icon) {
     DEFAULT_OPTS.icon = icon;

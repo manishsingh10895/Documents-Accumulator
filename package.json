@@ -8,7 +8,7 @@
     "watch:dev": "webpack --watch --progress --profile --colors --display-error-details --display-cached",
     "build": "npm run build:dev",
     "build:dev": "webpack --progress --profile --colors --display-error-details --display-cached",
-    "package": "node src/app/package.js",
+    "package": "node package.js",
     "package-all": "npm run package -- --all",
     "typings-install": "typings install",
     "postinstall": "npm run typings-install",
