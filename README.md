@@ -1,4 +1,4 @@
-# Angular 2 webpack minimal startekit
+# Angular 2 electron app featuring webpack
 
 A working demo of [electron] [angular2] using [Webpack]
 
