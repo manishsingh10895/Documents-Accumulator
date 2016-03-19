@@ -7,6 +7,13 @@ import {ROUTER_PROVIDERS, LocationStrategy, HashLocationStrategy, RouteConfig, R
 import {HTTP_PROVIDERS} from 'angular2/http';
 import {Component, View} from 'angular2/core';
 
+//setup redux
+import {createStore} from 'redux';
+import {rootReducer} from './rootReducer';
+import {Actions} from './actions';
+
+const appStore = createStore(rootReducer);
+
 import {Login} from './components/login';
 import {Home} from './components/home';
 
@@ -57,5 +64,7 @@ browser.bootstrap(App, [
     ...ENV_PROVIDERS,
     ...HTTP_PROVIDERS,
     ...ROUTER_PROVIDERS,
-    ngCore.provide(LocationStrategy, { useClass: HashLocationStrategy })
+    ngCore.provide(LocationStrategy, { useClass: HashLocationStrategy }),
+    ngCore.provide('AppStore', { useValue: appStore }),
+    Actions
 ])
