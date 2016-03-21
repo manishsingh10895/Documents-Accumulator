@@ -8,9 +8,9 @@
 
 // Prefer CoreJS over the polyfills above
 import 'core-js';
-import 'zone.js/dist/zone-microtask';
+require('zone.js/dist/zone.js');
 
-if ('production' === process.env.ENV) {
+if ('production' === ENV) {
   // Production
 
   // RxJS
