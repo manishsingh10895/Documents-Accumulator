@@ -37,7 +37,6 @@
     "compression-webpack-plugin": "^0.3.0",
     "copy-webpack-plugin": "^1.1.1",
     "css-loader": "^0.23.1",
-    "electron": "^0.4.1",
     "electron-packager": "^5.2.1",
     "es6-promise": "^3.0.2",
     "es6-promise-loader": "^1.0.1",
