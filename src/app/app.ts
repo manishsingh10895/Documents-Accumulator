@@ -5,7 +5,7 @@ import * as ngCore from 'angular2/core';
 import * as browser from 'angular2/platform/browser';
 import {ROUTER_PROVIDERS, LocationStrategy, HashLocationStrategy, RouteConfig, Router, ROUTER_DIRECTIVES} from 'angular2/router';
 import {HTTP_PROVIDERS} from 'angular2/http';
-import {Component, View} from 'angular2/core';
+import {Component} from 'angular2/core';
 
 //setup redux
 import {createStore} from 'redux';
@@ -32,8 +32,6 @@ ENV_PROVIDERS.push(browser.ELEMENT_PROBE_PROVIDERS);
 @Component({
     // The selector is what angular internally uses
     selector: 'app', // <app></app>
-})
-@View({
     directives: [ROUTER_DIRECTIVES, Login, Home],
     template: `
     <div>
@@ -42,7 +40,7 @@ ENV_PROVIDERS.push(browser.ELEMENT_PROBE_PROVIDERS);
     `
 })
 @RouteConfig([
-    { path: '/', component: Home, name: 'Home' },
+    { path: '/', component: Login, name: 'Login' },
     { path: '/login', component: Login, name: 'Login' }
 ])
 export class App {
