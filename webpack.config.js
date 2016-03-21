@@ -8,6 +8,7 @@ var helpers = require('./helpers');
 
 var CopyWebpackPlugin = require('copy-webpack-plugin');
 var ForkCheckerPlugin = require('awesome-typescript-loader').ForkCheckerPlugin;
+var webpackTargetElectronRenderer = require('webpack-target-electron-renderer');
 
 const ENV = process.env.ENV = process.env.NODE_ENV = 'development';
 
@@ -20,7 +21,7 @@ var METADATA = {
 /*
  * Config
  */
-module.exports = {
+var config = {
     // static data for index.html
     metadata: METADATA,
     // for faster builds use 'eval'
@@ -110,7 +111,6 @@ module.exports = {
         // NOTE: when adding more properties make sure you include them in custom-typings.d.ts
         new webpack.DefinePlugin({ 'ENV': JSON.stringify(METADATA.ENV) })
     ],
-    target: 'node-webkit',
     // Other module loader config
     tslint: {
         emitErrors: false,
@@ -127,3 +127,6 @@ module.exports = {
         setImmediate: false
     }
 };
+
+config.target = webpackTargetElectronRenderer(config);
+module.exports = config;
