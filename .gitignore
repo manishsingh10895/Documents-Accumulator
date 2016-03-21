@@ -58,3 +58,6 @@ release
 
 #dist folder in app
 src/app/dist
+
+#Remove configurations from version control
+config.json
