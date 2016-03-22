@@ -1,5 +1,5 @@
 import {Injectable} from 'angular2/core';
-import {Http} from 'angular2/http';
+import {Http, Headers} from 'angular2/http';
 import {Inject} from 'angular2/core';
 
 import {Actions} from './../actions';
@@ -17,15 +17,15 @@ export class Authentication {
     //Inject the store to make sure state changes go through the store
     constructor( @Inject('AppStore') private appStore, private actions: Actions, http: Http) {
         //authenticate and call the store to update the token
-        this.authWindow = new BrowserWindow({ width: 800, height: 600, show: false});
+        this.authWindow = new BrowserWindow({ width: 800, height: 600, show: false });
         this.http = http;
     }
 
     githubHandShake() {
-        
+
         // Build the OAuth consent page URL
-        var githubUrl = 'https://github.com/login/oauth/authorize?';
-        var authUrl = githubUrl + 'client_id=' + options.client_id + '&scope=' + options.scopes;
+        let githubUrl = 'https://github.com/login/oauth/authorize?';
+        let authUrl = githubUrl + 'client_id=' + options.github.client_id + '&scope=' + options.github.scopes;
         this.authWindow.loadUrl(authUrl);
         this.authWindow.show();
 
@@ -46,9 +46,9 @@ export class Authentication {
     }
 
     handleGitHubCallback(url) {
-        var raw_code = /code=([^&]*)/.exec(url) || null;
-        var code = (raw_code && raw_code.length > 1) ? raw_code[1] : null;
-        var error = /\?error=(.+)$/.exec(url);
+        let raw_code = /code=([^&]*)/.exec(url) || null;
+        let code = (raw_code && raw_code.length > 1) ? raw_code[1] : null;
+        let error = /\?error=(.+)$/.exec(url);
 
         if (code || error) {
             // Close the browser if code found or error
@@ -57,24 +57,30 @@ export class Authentication {
 
         // If there is a code, proceed to get token from github
         if (code) {
-            this.requestGithubToken(options, code);
+            this.requestGithubToken(options.github, code);
         } else if (error) {
             alert('Oops! Something went wrong and we couldn\'t' +
                 'log you in using Github. Please try again.');
         }
     }
 
-    requestGithubToken(options, code) {
+    requestGithubToken(githubOptions, githubCode) {
+        let creds = "client_id=" + githubOptions.client_id + "&client_secret=" + githubOptions.client_secret + "&code=" + githubCode;
 
-        var creds = "client_id=" + options.client_id + "&client_secret=" + options.client_secret + "&code=" + code;
+        let headers = new Headers();
+        headers.append('Accept', 'application/json');
 
-        this.http.post('https://github.com/login/oauth/access_token', creds)
-        .map(res => res.json())
-        .subscribe(
-            data => console.log(data),
+        this.http.post('https://github.com/login/oauth/access_token?' + creds, '', { headers: headers })
+            .subscribe(
+            response => {
+                //call the store to update the githubtoken
+                let body_object = JSON.parse(response['_body']);
+                console.log(body_object.access_token);
+                this.appStore.dispatch(this.actions.github_auth(body_object.access_token));
+            },
             err => console.log(err),
             () => console.log('Authentication Complete')
-        );
+            );
 
     }
 
