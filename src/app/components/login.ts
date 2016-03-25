@@ -1,4 +1,4 @@
-import {Component, Inject} from 'angular2/core';
+import {Component, Inject, NgZone} from 'angular2/core';
 import {OnDestroy} from 'angular2/core'
 
 //we get authentication service to provide us with authentication methods
@@ -19,12 +19,14 @@ export class Login implements OnDestroy {
     authenticated: boolean;
 
     //Inject Authentication service on construction
-    constructor( @Inject('AppStore') private appStore, @Inject(Authentication) auth) {
+    constructor(private _ngZone: NgZone, @Inject('AppStore') private appStore, @Inject(Authentication) auth) {
         this.auth = auth;
 
         this.unsubscribe = this.appStore.subscribe(() => {
             let state = this.appStore.getState();
             this.authenticated = state.authenticated;
+            //Because the BrowserWindow runs outside angular for some reason we need to call Zone.run()
+            this._ngZone.run(() => {console.log('Outside Done!') });
         });
     }
 
