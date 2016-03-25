@@ -51,13 +51,6 @@ var config = {
 
     module: {
         loaders: [
-            // Support Angular 2 async routes via .async.ts
-            {
-                test: /\.async\.ts$/,
-                loaders: ['es6-promise-loader', 'ts-loader'],
-                exclude: [/\.(spec|e2e)\.ts$/]
-            },
-
             // Support for .ts files.
             {
                 test: /\.ts$/,
