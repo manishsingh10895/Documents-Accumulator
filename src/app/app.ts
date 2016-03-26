@@ -41,7 +41,8 @@ ENV_PROVIDERS.push(browser.ELEMENT_PROBE_PROVIDERS);
 })
 @RouteConfig([
     { path: '/', component: Login, name: 'Login' },
-    { path: '/login', component: Login, name: 'Login' }
+    { path: '/login', component: Login, name: 'Login' },
+    { path: '/home', component: Home, name: 'Home' }
 ])
 export class App {
     //component initialization
