@@ -25,8 +25,13 @@ export class Login implements OnDestroy {
         this.unsubscribe = this.appStore.subscribe(() => {
             let state = this.appStore.getState();
             this.authenticated = state.authenticated;
+            
             //Because the BrowserWindow runs outside angular for some reason we need to call Zone.run()
-            this._ngZone.run(() => this._router.navigate(['Home']));
+            this._ngZone.run(() => {
+                if(state.githubname != ""){
+                 this._router.navigate(['Home'])   
+                }
+            });
         });
     }
 

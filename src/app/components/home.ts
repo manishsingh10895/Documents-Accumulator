@@ -1,4 +1,4 @@
-import {Component} from 'angular2/core';
+import {Component,Inject} from 'angular2/core';
 
 @Component({
     selector: 'home',
@@ -18,8 +18,9 @@ export class Home {
     name: string;
     counter: number;
 
-    constructor() {
-        this.name = "Angular2 Minimal";
+    constructor(@Inject('AppStore') private appStore) {
+        let state = this.appStore.getState();
+        this.name = state.githubname;
         this.counter = 0;
     }
 

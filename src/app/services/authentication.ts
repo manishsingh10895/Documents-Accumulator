@@ -75,13 +75,29 @@ export class Authentication {
             response => {
                 //call the store to update the githubtoken
                 let body_object = JSON.parse(response['_body']);
-                console.log(body_object.access_token);
+                this.requestUserData(body_object.access_token);
                 this.appStore.dispatch(this.actions.github_auth(body_object.access_token));
             },
             err => console.log(err),
             () => console.log('Authentication Complete')
             );
 
+    }
+    
+    requestUserData(token){
+        let headers = new Headers();
+        headers.append('Accept', 'application/json');
+
+        this.http.get('https://api.github.com/user?access_token=' + token, { headers: headers })
+            .subscribe(
+            response => {
+                //call the store to update the githubtoken
+                let body_object = JSON.parse(response['_body']);
+                this.appStore.dispatch(this.actions.change_name(body_object.name));
+            },
+            err => console.log(err),
+            () => console.log('Request Complete')
+            );
     }
 
 }
