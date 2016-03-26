@@ -20,7 +20,7 @@ export class Home {
 
     constructor(@Inject('AppStore') private appStore) {
         let state = this.appStore.getState();
-        this.name = state.githubname;
+        this.name = state.username;
         this.counter = 0;
     }
 

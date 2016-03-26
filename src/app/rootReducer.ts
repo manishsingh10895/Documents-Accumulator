@@ -1,17 +1,17 @@
 import * as Actions from './actions';
 
 const initialState = {
-    githubToken: window.localStorage.getItem('githubtoken') || false,
+    authToken: window.localStorage.getItem('authToken') || false,
     authenticated: false,
-    githubname: ''
+    username: ''
 }
 
 export function rootReducer(state = initialState, action) {
     switch (action.type) {
         case Actions.GITHUB_AUTH:
-            return Object.assign(state, { githubToken: action.token, authenticated: true });
+            return Object.assign(state, { authToken: action.token, authenticated: true });
         case Actions.CHANGE_NAME:
-            return Object.assign(state, { githubname: action.githubname });
+            return Object.assign(state, { username: action.username });
         default:
             return state;
     }

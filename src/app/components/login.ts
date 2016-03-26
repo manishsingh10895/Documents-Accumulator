@@ -28,7 +28,7 @@ export class Login implements OnDestroy {
             
             //Because the BrowserWindow runs outside angular for some reason we need to call Zone.run()
             this._ngZone.run(() => {
-                if(state.githubname != ""){
+                if(state.username != ""){
                  this._router.navigate(['Home'])   
                 }
             });

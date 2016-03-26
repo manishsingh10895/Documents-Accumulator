@@ -73,7 +73,7 @@ export class Authentication {
         this.http.post('https://github.com/login/oauth/access_token?' + creds, '', { headers: headers })
             .subscribe(
             response => {
-                //call the store to update the githubtoken
+                //call the store to update the authToken
                 let body_object = JSON.parse(response['_body']);
                 this.requestUserData(body_object.access_token);
                 this.appStore.dispatch(this.actions.github_auth(body_object.access_token));
@@ -91,7 +91,7 @@ export class Authentication {
         this.http.get('https://api.github.com/user?access_token=' + token, { headers: headers })
             .subscribe(
             response => {
-                //call the store to update the githubtoken
+                //call the store to update the authToken
                 let body_object = JSON.parse(response['_body']);
                 this.appStore.dispatch(this.actions.change_name(body_object.name));
             },

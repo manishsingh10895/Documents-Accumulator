@@ -18,7 +18,7 @@ export class Actions {
         //Authenticate user via the store using the token received from github
         return {
             type: CHANGE_NAME,
-            githubname: name
+            username: name
         };
     };
 }
