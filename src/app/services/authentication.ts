@@ -76,7 +76,6 @@ export class Authentication {
                 //call the store to update the authToken
                 let body_object = JSON.parse(response['_body']);
                 this.requestUserData(body_object.access_token);
-                this.appStore.dispatch(this.actions.github_auth(body_object.access_token));
             },
             err => console.log(err),
             () => console.log('Authentication Complete')
@@ -85,6 +84,9 @@ export class Authentication {
     }
     
     requestUserData(token){
+        //set the token
+        this.appStore.dispatch(this.actions.github_auth(token));
+        
         let headers = new Headers();
         headers.append('Accept', 'application/json');
 
