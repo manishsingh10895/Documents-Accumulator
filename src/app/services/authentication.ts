@@ -127,17 +127,17 @@ export class Authentication {
             );
 
     }
-    
+
     /**
      * API Request to get information of a user from the Github API
      * 
      * @param {string} token
      * The token to be used in the request
      */
-    requestUserData(token){
+    requestUserData(token) {
         //set the token
         this.appStore.dispatch(this.actions.github_auth(token));
-        
+
         let headers = new Headers();
         headers.append('Accept', 'application/json');
 
