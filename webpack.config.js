@@ -1,4 +1,4 @@
-// @AngularClass
+// @joaogarin
 
 /*
  * Helper: root(), and rootDir() are defined at the bottom
@@ -121,5 +121,8 @@ var config = {
     }
 };
 
+/**
+ * Target Electron
+ */
 config.target = webpackTargetElectronRenderer(config);
 module.exports = config;
