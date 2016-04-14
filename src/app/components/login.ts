@@ -1,10 +1,17 @@
-import {Component, Inject, NgZone} from 'angular2/core';
-import {OnDestroy} from 'angular2/core';
+/**
+ * Import decorators and services from angular
+ */
+import {Component, Inject, NgZone, OnDestroy} from 'angular2/core';
 import {Router} from 'angular2/router';
 
+/**
+ * Include action representations from our list of actions to dispatch
+ */
 import {Actions} from './../actions';
 
-//we get authentication service to provide us with authentication methods
+/**
+ * Import the authentication service to be injected into our component
+ */
 import { Authentication } from './../services/authentication';
 
 @Component({
@@ -39,6 +46,10 @@ export class Login implements OnDestroy {
         });
     }
 
+    /**
+     * Checks for authentication
+     * If existing auth in localstorage just gets the user data immediately
+     */
     checkAuth() {
         let storageToken = window.localStorage.getItem('authToken');
         

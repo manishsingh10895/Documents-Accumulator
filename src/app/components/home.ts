@@ -1,3 +1,6 @@
+/**
+ * Import decorators and services from angular
+ */
 import {Component,Inject} from 'angular2/core';
 
 @Component({
