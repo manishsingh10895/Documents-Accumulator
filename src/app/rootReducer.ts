@@ -18,10 +18,10 @@ const initialState = {
  * will receive requests to update state with an action type and its parameters
  * Changes the state always in an immutable way.
  * 
- * @param {state} 
+ * @param {Object} state
  * The current state
  * 
- * @param {action} 
+ * @param {Object} action
  * The action to be performed
  * 
  * @return state
