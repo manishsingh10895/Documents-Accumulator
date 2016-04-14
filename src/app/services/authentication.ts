@@ -1,12 +1,27 @@
+/**
+ * Include angular2 dependencies including HTTP dependencies 
+ * and Injectable and Inject
+ */
 import {Injectable} from 'angular2/core';
 import {Http, Headers} from 'angular2/http';
 import {Inject} from 'angular2/core';
 
+/**
+ * Include action representations from our list of actions to dispatch
+ */
 import {Actions} from './../actions';
-// Or in the renderer process.
+
+/**
+ * Include electron browser so that a new windows can be triggered for auth
+ * Information about browserWindow on electron 
+ * https://github.com/electron/electron/blob/master/docs/api/browser-window.md
+ */
 const remote = require('electron').remote;
 const BrowserWindow = remote.BrowserWindow;
 
+/**
+ * Basic configuration like Endpoint URL's, API version..
+ */
 const options = require('./../config.json');
 
 @Injectable()
@@ -21,6 +36,16 @@ export class Authentication {
         this.http = http;
     }
 
+    /**
+     * Fires the Github Auth process by calling the github api with 
+     * https://github.com/login/oauth/authorize
+     * 
+     * Listens to specific redirects ont he BrowserWindow object to handle the callback from envato
+     * On will-navigate and did-get-redirect-request methods invocation will call the handleGitHubCallback(url)
+     * with the url to make sure a code was received
+     * 
+     * OnClose will reset the browserWindow object
+     */
     githubHandShake() {
 
         // Build the OAuth consent page URL
@@ -29,8 +54,7 @@ export class Authentication {
         this.authWindow.loadUrl(authUrl);
         this.authWindow.show();
 
-        // Handle the response from GitHub - See Update from 4/12/2015
-
+        // Handle the response from GitHub
         this.authWindow.webContents.on('will-navigate', (event, url) => {
             this.handleGitHubCallback(url);
         });
@@ -45,6 +69,17 @@ export class Authentication {
         }, false);
     }
 
+    /**
+     * Handles the callback from the browserWindow object
+     * Checks for a code in the url and a refresh token received. When token and refresh 
+     * token are received calls requestGithubToken
+     * 
+     * @param {string} url
+     * The url that was just called by one of the events :
+     * will-navigate
+     * did-get-redirect-request
+     * 
+     */
     handleGitHubCallback(url) {
         let raw_code = /code=([^&]*)/.exec(url) || null;
         let code = (raw_code && raw_code.length > 1) ? raw_code[1] : null;
@@ -64,6 +99,16 @@ export class Authentication {
         }
     }
 
+    /**
+     * Requests a git token from the github api given the 
+     * code received in the authentication step before
+     * 
+     * @param {Object} githubOptions
+     * The options to be sent to this request (received from the config file)
+     * 
+     * @param {string} githubCode
+     * The code received by the authentication method
+     */
     requestGithubToken(githubOptions, githubCode) {
         let creds = "client_id=" + githubOptions.client_id + "&client_secret=" + githubOptions.client_secret + "&code=" + githubCode;
 
@@ -83,6 +128,12 @@ export class Authentication {
 
     }
     
+    /**
+     * API Request to get information of a user from the Github API
+     * 
+     * @param {string} token
+     * The token to be used in the request
+     */
     requestUserData(token){
         //set the token
         this.appStore.dispatch(this.actions.github_auth(token));
