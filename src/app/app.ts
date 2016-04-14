@@ -7,13 +7,18 @@ import {ROUTER_PROVIDERS, LocationStrategy, HashLocationStrategy, RouteConfig, R
 import {HTTP_PROVIDERS} from 'angular2/http';
 import {Component} from 'angular2/core';
 
-//setup redux
+/**
+ * setup redux
+ */
 import {createStore} from 'redux';
 import {rootReducer} from './rootReducer';
 import {Actions} from './actions';
-
 const appStore = createStore(rootReducer);
 
+
+/**
+ * Import our child components
+ */
 import {Login} from './components/login';
 import {Home} from './components/home';
 

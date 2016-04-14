@@ -6,7 +6,7 @@ export class Actions {
     }
 
     github_auth(token:string) {
-        //Authenticate user via the store using the token received from github
+        // Authenticate user via the store using the token received from github
         return {
             type: GITHUB_AUTH,
             token: token,
@@ -15,7 +15,7 @@ export class Actions {
     };
     
     change_name(name:string) {
-        //Authenticate user via the store using the token received from github
+        // Change the username
         return {
             type: CHANGE_NAME,
             username: name
