@@ -1,11 +1,11 @@
 /**
  * Import decorators and services from angular
  */
-import {Component,Inject} from 'angular2/core';
+import {Component, Inject} from '@angular/core';
 
 @Component({
-    selector: 'home',
-    template: `
+  selector: 'home',
+  template: `
     <div>
        <h1>{{name}}</h1>
        <input [(ngModel)]="name" />
@@ -13,14 +13,14 @@ import {Component,Inject} from 'angular2/core';
     `
 })
 export class Home {
-    name: string;
-    
-    constructor(@Inject('AppStore') private appStore) {
-        let state = this.appStore.getState();
-        this.name = state.username;
-    }
+  name: string;
 
-    ngOnInit() {
-        // Our API
-    }
+  constructor( @Inject('AppStore') private appStore) {
+    let state = this.appStore.getState();
+    this.name = state.username;
+  }
+
+  ngOnInit() {
+    // Our API
+  }
 }

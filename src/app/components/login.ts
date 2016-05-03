@@ -1,8 +1,8 @@
 /**
  * Import decorators and services from angular
  */
-import {Component, Inject, NgZone, OnDestroy} from 'angular2/core';
-import {Router} from 'angular2/router';
+import {Component, Inject, NgZone, OnDestroy} from '@angular/core';
+import {Router} from '@angular/router-deprecated';
 
 /**
  * Include action representations from our list of actions to dispatch
@@ -19,6 +19,7 @@ import { Authentication } from './../services/authentication';
     providers: [Authentication],
     template: `
     <div>
+        Authenticate
         <button *ngIf="!authenticated" (click)="authenticate()">Authenticate with Github</button>
     </div>
     `
@@ -30,7 +31,7 @@ export class Login implements OnDestroy {
     //Inject Authentication service on construction
     constructor(private _router: Router, private _ngZone: NgZone, @Inject('AppStore') private appStore, @Inject(Authentication) private auth, private actions: Actions) {
         this.auth = auth;
-        
+
         this.checkAuth();
 
         this.unsubscribe = this.appStore.subscribe(() => {
@@ -52,7 +53,7 @@ export class Login implements OnDestroy {
      */
     checkAuth() {
         let storageToken = window.localStorage.getItem('authToken');
-        
+
         if(storageToken){
             this.auth.requestUserData(storageToken);
         }

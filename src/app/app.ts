@@ -1,11 +1,18 @@
 /*
  * Providers provided by Angular
  */
-import * as ngCore from 'angular2/core';
-import * as browser from 'angular2/platform/browser';
-import {ROUTER_PROVIDERS, LocationStrategy, HashLocationStrategy, RouteConfig, Router, ROUTER_DIRECTIVES} from 'angular2/router';
-import {HTTP_PROVIDERS} from 'angular2/http';
-import {Component} from 'angular2/core';
+import {provide, enableProdMode} from '@angular/core';
+import {bootstrap} from '@angular/platform-browser-dynamic'
+import {LocationStrategy, HashLocationStrategy} from '@angular/common';
+
+// ROUTER
+import {ROUTER_PROVIDERS, RouteConfig, ROUTER_DIRECTIVES } from '@angular/router-deprecated';
+
+// HTTP
+import {HTTP_PROVIDERS} from '@angular/http';
+
+// Decorators
+import {Component} from '@angular/core';
 
 /**
  * setup redux
@@ -22,13 +29,6 @@ const appStore = createStore(rootReducer);
 import {Login} from './components/login';
 import {Home} from './components/home';
 
-/*
- * App Environment Providers
- * providers that only live in certain environment
- */
-const ENV_PROVIDERS = [];
-
-ENV_PROVIDERS.push(browser.ELEMENT_PROBE_PROVIDERS);
 
 /*
  * App Component
@@ -64,11 +64,10 @@ export class App {
  * Bootstrap our Angular app with a top level component `App` and inject
  * our Services and Providers into Angular's dependency injection
  */
-browser.bootstrap(App, [
-    ...ENV_PROVIDERS,
+bootstrap(App, [
     ...HTTP_PROVIDERS,
     ...ROUTER_PROVIDERS,
-    ngCore.provide(LocationStrategy, { useClass: HashLocationStrategy }),
-    ngCore.provide('AppStore', { useValue: appStore }),
+    provide(LocationStrategy, { useClass: HashLocationStrategy }),
+    provide('AppStore', { useValue: appStore }),
     Actions
-])
+]).catch(err => console.error(err));
