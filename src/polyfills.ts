@@ -10,30 +10,13 @@
 import 'core-js/es6';
 import 'core-js/es7/reflect';
 require('zone.js/dist/zone.js');
+//Error['stackTraceLimit'] = Infinity;
 
-if ('production' === process.env.ENV) {
-  // Production
+require('zone.js/dist/long-stack-trace-zone');
 
-  // RxJS
-  // In production manually include the operators you use
-  require('rxjs/add/operator/map');
-  require('rxjs/add/operator/mergeMap');
+// RxJS
+// to include every operator uncomment
+// require('rxjs/Rx');
 
-} else {
-  // Development
-
-  Error['stackTraceLimit'] = Infinity;
-
-  require('zone.js/dist/long-stack-trace-zone');
-
-  // RxJS
-  // to include every operator uncomment
-  // require('rxjs/Rx');
-
-  require('rxjs/add/operator/map');
-  require('rxjs/add/operator/mergeMap');
-
-}
-
-// For vendors for example jQuery, Lodash, angular2-jwt just import them anywhere in your app
-// Also see custom_typings.d.ts as you also need to do `typings install x` where `x` is your module
+require('rxjs/add/operator/map');
+require('rxjs/add/operator/mergeMap');

@@ -1,58 +1,83 @@
 {
-  "rules": {
-    "class-name": true,
-    "curly": false,
-    "eofline": true,
-    "indent": [
-      true,
-      "spaces"
-    ],
-    "max-line-length": [
-      true,
-      100
-    ],
-    "member-ordering": [
-      true,
-      "public-before-private",
-      "static-before-instance",
-      "variables-before-functions"
-    ],
-    "no-arg": true,
-    "no-construct": true,
-    "no-duplicate-key": true,
-    "no-duplicate-variable": true,
-    "no-empty": false,
-    "no-eval": true,
-    "trailing-comma": true,
-    "no-trailing-whitespace": true,
-    "no-unused-expression": true,
-    "no-unused-variable": false,
-    "no-unreachable": true,
-    "no-use-before-declare": true,
-    "one-line": [
-      true,
-      "check-open-brace",
-      "check-catch",
-      "check-else",
-      "check-whitespace"
-    ],
-    "quotemark": [
-      true,
-      "single"
-    ],
-    "semicolon": true,
-    "triple-equals": [
-      true,
-      "allow-null-check"
-    ],
-    "variable-name": false,
-    "whitespace": [
-      true,
-      "check-branch",
-      "check-decl",
-      "check-operator",
-      "check-separator",
-      "check-type"
-    ]
+  "name": "envato-teams",
+  "version": "0.0.0",
+  "description": "Envato teams OXS App",
+  "main": "",
+  "scripts": {
+    "watch": "npm run watch:dev",
+    "watch:dev": "webpack --watch --progress --profile --colors --display-error-details --display-cached",
+    "build": "npm run build:dev",
+    "build:dev": "webpack --progress --profile --colors --display-error-details --display-cached",
+    "package": "node package.js",
+    "package-all": "npm run package -- --all",
+    "typings-install": "typings install",
+    "postinstall": "npm run typings-install",
+    "electron": "electron src/app",
+    "webpack-test": "webpack --config webpack.test.js --progress --profile --colors --display-error-details --display-cached",
+    "test": "npm run webpack-test && live-server --open=tests/unit-tests.html"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@bitbucket.org:joaogarin/envato-teams.git"
+  },
+  "author": "joaogarin <github@joaogarin.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/joaogarin/angular2-electron/issues"
+  },
+  "homepage": "",
+  "dependencies": {
+    "angular2": "2.0.0-beta.14",
+    "core-js": "^2.1.5",
+    "electron-prebuilt": "^0.35.4",
+    "rxjs": "5.0.0-beta.2",
+    "webpack-target-electron-renderer": "^0.4.0",
+    "zone.js": "0.6.11",
+    "angularfire2": "2.0.0-alpha.17",
+    "firebase": "~2.4.2"
+  },
+  "devDependencies": {
+    "awesome-typescript-loader": "^0.15.10",
+    "codelyzer": "0.0.19",
+    "compression-webpack-plugin": "^0.3.1",
+    "copy-webpack-plugin": "^1.1.1",
+    "css-loader": "^0.23.1",
+    "electron-packager": "^5.2.1",
+    "es6-promise-loader": "^1.0.1",
+    "es6-shim": "^0.35.0",
+    "es7-reflect-metadata": "^1.6.0",
+    "exports-loader": "^0.6.3",
+    "expose-loader": "^0.7.1",
+    "extract-text-webpack-plugin": "^1.0.1",
+    "file-loader": "^0.8.5",
+    "font-awesome": "^4.6.1",
+    "imports-loader": "^0.6.5",
+    "jasmine-core": "2.4.1",
+    "json-loader": "^0.5.4",
+    "node-libs-browser": "^0.5.0",
+    "node-sass": "^3.4.2",
+    "raw-loader": "0.5.1",
+    "redux": "^3.3.1",
+    "reflect-metadata": "0.1.2",
+    "rimraf": "^2.5.2",
+    "sass-loader": "^3.1.1",
+    "source-map-loader": "^0.1.5",
+    "style-loader": "^0.13.0",
+    "ts-helper": "0.0.1",
+    "ts-node": "^0.7.0",
+    "tsconfig-lint": "^0.6.0",
+    "tslint": "^3.5.0",
+    "tslint-loader": "^2.1.0",
+    "typedoc": "^0.3.12",
+    "typescript": "~1.8.9",
+    "typings": "^0.6.9",
+    "url-loader": "^0.5.7",
+    "webpack": "^1.12.14",
+    "webpack-dev-server": "^1.14.1",
+    "webpack-md5-hash": "^0.0.5"
+  },
+  "engines": {
+    "node": ">= 4.2.1 <= 5",
+    "npm": ">= 3"
   }
 }
