@@ -2,7 +2,7 @@
  * Providers provided by Angular
  */
 import {provide, enableProdMode} from '@angular/core';
-import {bootstrap} from '@angular/platform-browser-dynamic'
+import {bootstrap} from '@angular/platform-browser-dynamic';
 import {LocationStrategy, HashLocationStrategy} from '@angular/common';
 
 // ROUTER
