@@ -46,6 +46,10 @@ var config = {
     },
 
     module: {
+        preLoaders: [{
+            test: /\.ts$/,
+            loader: "tslint"
+        }],
         loaders: [
             // Support for .ts files.
             {
@@ -56,14 +60,14 @@ var config = {
 
             // Support for *.json files.
             { test: /\.json$/, loader: 'json-loader' },
-            
+
             // support for .html as raw text
             { test: /\.html$/, loader: 'raw-loader', exclude: [helpers.root('app/index.html')] }
         ]
     },
 
     plugins: [
-        
+
         // Plugin: CommonsChunkPlugin
         // Description: Shares common code between the pages.
         // It identifies common modules and put them into a commons chunk.
@@ -74,9 +78,9 @@ var config = {
     ],
     // Other module loader config
     tslint: {
-        emitErrors: false,
+        emitErrors: true,
         failOnHint: false,
-        resourcePath: 'app'
+        resourcePath: 'src/*'
     },
     // we need this due to problems with es6-shim
     node: {

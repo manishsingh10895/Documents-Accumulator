@@ -1,7 +1,7 @@
 /*
  * Providers provided by Angular
  */
-import {provide, enableProdMode} from '@angular/core';
+import {provide, enableProdMode, OnInit} from '@angular/core';
 import {bootstrap} from '@angular/platform-browser-dynamic';
 import {LocationStrategy, HashLocationStrategy} from '@angular/common';
 
@@ -26,8 +26,8 @@ const appStore = createStore(rootReducer);
 /**
  * Import our child components
  */
-import {Login} from './components/login';
-import {Home} from './components/home';
+import {LoginComponent} from './components/login';
+import {HomeComponent} from './components/home';
 
 
 /*
@@ -36,8 +36,8 @@ import {Home} from './components/home';
  */
 @Component({
     // The selector is what angular internally uses
-    selector: 'app', // <app></app>
-    directives: [ROUTER_DIRECTIVES, Login, Home],
+    selector: 'ae-app', // <app></app>
+    directives: [ROUTER_DIRECTIVES, LoginComponent, HomeComponent],
     template: `
     <div>
         <router-outlet></router-outlet>
@@ -45,11 +45,11 @@ import {Home} from './components/home';
     `
 })
 @RouteConfig([
-    { path: '/', component: Login, name: 'Login' },
-    { path: '/login', component: Login, name: 'Login' },
-    { path: '/home', component: Home, name: 'Home' }
+    { path: '/', component: LoginComponent, name: 'Login' },
+    { path: '/login', component: LoginComponent, name: 'Login' },
+    { path: '/home', component: HomeComponent, name: 'Home' }
 ])
-export class App {
+export class AppComponent implements OnInit {
     //component initialization
     ngOnInit() {
         //check authentication
@@ -64,7 +64,7 @@ export class App {
  * Bootstrap our Angular app with a top level component `App` and inject
  * our Services and Providers into Angular's dependency injection
  */
-bootstrap(App, [
+bootstrap(AppComponent, [
     ...HTTP_PROVIDERS,
     ...ROUTER_PROVIDERS,
     provide(LocationStrategy, { useClass: HashLocationStrategy }),

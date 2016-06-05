@@ -110,7 +110,7 @@ export class Authentication {
    * The code received by the authentication method
    */
   requestGithubToken(githubOptions, githubCode) {
-    let creds = "client_id=" + githubOptions.client_id + "&client_secret=" + githubOptions.client_secret + "&code=" + githubCode;
+    let creds = 'client_id=' + githubOptions.client_id + '&client_secret=' + githubOptions.client_secret + '&code=' + githubCode;
 
     let headers = new Headers();
     headers.append('Accept', 'application/json');

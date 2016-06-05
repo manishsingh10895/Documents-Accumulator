@@ -1,18 +1,18 @@
 /**
  * Import decorators and services from angular
  */
-import {Component, Inject} from '@angular/core';
+import {Component, Inject, OnInit} from '@angular/core';
 
 @Component({
-  selector: 'home',
+  selector: 'ae-home',
   template: `
     <div>
        <h1>{{name}}</h1>
-       <input [(ngModel)]="name" />
+       <input [(ngModel)]='name' />
     </div>
     `
 })
-export class Home {
+export class HomeComponent implements OnInit {
   name: string;
 
   constructor( @Inject('AppStore') private appStore) {

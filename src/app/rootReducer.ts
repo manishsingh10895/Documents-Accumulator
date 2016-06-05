@@ -9,8 +9,8 @@ import * as Actions from './actions';
 const initialState = {
     authToken: window.localStorage.getItem('authToken') || false,
     authenticated: false,
-    username: ''
-}
+    username: '',
+};
 
 /**
  * Our main reducer function

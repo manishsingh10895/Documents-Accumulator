@@ -24,7 +24,7 @@ export class Actions {
      * @return {Object} action
      * The action object
      */
-    github_auth(token:string) {
+    github_auth(token: string) {
         // Authenticate user via the store using the token received from github
         return {
             type: GITHUB_AUTH,
@@ -32,7 +32,7 @@ export class Actions {
             authenticated: true
         };
     };
-    
+
     /**
      * Saves the username received from Github API into the state tree
      * 
@@ -42,7 +42,7 @@ export class Actions {
      * @return {Object} action
      * The action object
      */
-    change_name(name:string) {
+    change_name(name: string) {
         // Change the username
         return {
             type: CHANGE_NAME,

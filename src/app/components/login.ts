@@ -15,16 +15,16 @@ import {Actions} from './../actions';
 import { Authentication } from './../services/authentication';
 
 @Component({
-    selector: 'login',
+    selector: 'ae-login',
     providers: [Authentication],
     template: `
     <div>
         Authenticate
-        <button *ngIf="!authenticated" (click)="authenticate()">Authenticate with Github</button>
+        <button *ngIf='!authenticated' (click)='authenticate()'>Authenticate with Github</button>
     </div>
     `
 })
-export class Login implements OnDestroy {
+export class LoginComponent implements OnDestroy {
     unsubscribe: any;
     authenticated: boolean;
 
@@ -40,7 +40,7 @@ export class Login implements OnDestroy {
 
             //Because the BrowserWindow runs outside angular for some reason we need to call Zone.run()
             this._ngZone.run(() => {
-                if (state.username != "") {
+                if (state.username != '') {
                     this._router.navigate(['Home']);
                 }
             });
@@ -54,7 +54,7 @@ export class Login implements OnDestroy {
     checkAuth() {
         let storageToken = window.localStorage.getItem('authToken');
 
-        if(storageToken){
+        if (storageToken) {
             this.auth.requestUserData(storageToken);
         }
     }
