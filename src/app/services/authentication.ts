@@ -2,14 +2,15 @@
  * Include angular2 dependencies including HTTP dependencies
  * and Injectable and Inject
  */
-import {Injectable} from '@angular/core';
-import {Http, Headers} from '@angular/http';
-import {Inject} from '@angular/core';
+import { Injectable } from '@angular/core';
+import { Http, Headers } from '@angular/http';
 
 /**
- * Include action representations from our list of actions to dispatch
+ * Import the ngrx configured store
  */
-import {Actions} from './../actions';
+import { Store } from '@ngrx/store';
+import { AppState } from './../store/appState.store';
+import { AUTH_ACTION_TYPES } from './../store/auth.store';
 
 /**
  * Include electron browser so that a new windows can be triggered for auth
@@ -30,7 +31,7 @@ export class Authentication {
   http: Http;
 
   //Inject the store to make sure state changes go through the store
-  constructor( @Inject('AppStore') private appStore, private actions: Actions, http: Http) {
+  constructor(public store: Store<AppState>, http: Http) {
     //authenticate and call the store to update the token
     this.authWindow = new BrowserWindow({ width: 800, height: 600, show: false });
     this.http = http;
@@ -64,7 +65,7 @@ export class Authentication {
     });
 
     // Reset the authWindow on close
-    this.authWindow.on('close', function() {
+    this.authWindow.on('close', function () {
       this.authWindow = null;
     }, false);
   }
@@ -136,7 +137,11 @@ export class Authentication {
    */
   requestUserData(token) {
     //set the token
-    this.appStore.dispatch(this.actions.github_auth(token));
+    this.store.dispatch({
+      type: AUTH_ACTION_TYPES.GITHUB_AUTH, payload: {
+        'token': token
+      }
+    });
 
     let headers = new Headers();
     headers.append('Accept', 'application/json');
@@ -146,7 +151,12 @@ export class Authentication {
       response => {
         //call the store to update the authToken
         let body_object = JSON.parse(response['_body']);
-        this.appStore.dispatch(this.actions.change_name(body_object.name));
+        console.log(body_object);
+        this.store.dispatch({
+          type: AUTH_ACTION_TYPES.CHANGE_NAME, payload: {
+            'username': body_object.name
+          }
+        });
       },
       err => console.log(err),
       () => console.log('Request Complete')

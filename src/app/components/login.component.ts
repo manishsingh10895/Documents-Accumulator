@@ -1,13 +1,14 @@
 /**
  * Import decorators and services from angular
  */
-import {Component, Inject, NgZone, OnDestroy} from '@angular/core';
-import {Router} from '@angular/router-deprecated';
+import { Component, NgZone } from '@angular/core';
+import { Router } from '@angular/router';
 
 /**
- * Include action representations from our list of actions to dispatch
+ * Import the ngrx configured store
  */
-import {Actions} from './../actions';
+import { Store } from '@ngrx/store';
+import { AppState } from './../store/appState.store';
 
 /**
  * Import the authentication service to be injected into our component
@@ -16,7 +17,6 @@ import { Authentication } from './../services/authentication';
 
 @Component({
     selector: 'ae-login',
-    providers: [Authentication],
     template: `
     <div>
         Authenticate
@@ -24,24 +24,25 @@ import { Authentication } from './../services/authentication';
     </div>
     `
 })
-export class LoginComponent implements OnDestroy {
+export class LoginComponent {
     unsubscribe: any;
     authenticated: boolean;
 
     //Inject Authentication service on construction
-    constructor(private _router: Router, private _ngZone: NgZone, @Inject('AppStore') private appStore, @Inject(Authentication) private auth, private actions: Actions) {
+    constructor(private _router: Router, private _ngZone: NgZone, private auth: Authentication, public store: Store<AppState>) {
         this.auth = auth;
 
         this.checkAuth();
 
-        this.unsubscribe = this.appStore.subscribe(() => {
-            let state = this.appStore.getState();
+        this.store.map((fullStore: any) => {
+            return fullStore.authStore;
+        }).subscribe((state: any) => {
+            console.log(state);
             this.authenticated = state.authenticated;
-
             //Because the BrowserWindow runs outside angular for some reason we need to call Zone.run()
             this._ngZone.run(() => {
                 if (state.username != '') {
-                    this._router.navigate(['Home']);
+                    this._router.navigate(['home']);
                 }
             });
         });
@@ -61,10 +62,5 @@ export class LoginComponent implements OnDestroy {
 
     authenticate() {
         this.auth.githubHandShake();
-    }
-
-    ngOnDestroy() {
-        //remove listener
-        this.unsubscribe();
     }
 }
