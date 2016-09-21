@@ -1,48 +1,29 @@
 import {
-    iit,
-    it,
-    ddescribe,
-    describe,
-    expect,
     async,
     inject,
-    beforeEachProviders
+    TestBed,
 } from '@angular/core/testing';
-import {
-    TestComponentBuilder,
-    ComponentFixture
-} from '@angular/compiler/testing';
-import { Component, provide } from '@angular/core';
-import {HomeComponent} from './home';
+import { Component } from '@angular/core';
+import { HomeComponent } from './home.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
-/**
- * setup redux
- */
-import {createStore} from 'redux';
-import {rootReducer} from './../rootReducer';
-import {Actions} from './../actions';
-const appStore = createStore(rootReducer);
+// Setup redux with ngrx
+import { Store, StoreModule } from '@ngrx/store';
+import { authStore, authInitialState } from './../store/auth.store';
 
 describe('App component', () => {
+    beforeEach(() => TestBed.configureTestingModule({
+        imports: [
+            FormsModule,
+            ReactiveFormsModule,
+            StoreModule.provideStore({ authStore }, { authStore: authInitialState }),
+        ],
+        providers: [
+            HomeComponent,
+        ],
+    }));
 
-    // Setup the dependencies for this test
-    beforeEachProviders(() => [
-        provide('AppStore', { useValue: appStore }),
-        Actions
-    ]);
-
-    @Component({
-        template: ``,
-        directives: [HomeComponent]
-    })
-    class HomeTest {}
-
-    it('shoud render with h1 empty', async(inject([TestComponentBuilder], (tcb) => {
-        tcb.overrideTemplate(HomeTest, '<ae-home></ae-home>')
-            .createAsync(HomeTest).then((fixture: ComponentFixture<HomeTest>) => {
-                fixture.detectChanges();
-                let compiled = fixture.debugElement.nativeElement;
-                expect(compiled.querySelector('h1')).toHaveText('');
-            });
-    })));
+    it('should have default data', inject([HomeComponent], (home: HomeComponent) => {
+        expect(home.messageForm.controls['messageText'].value).toEqual('Angular2');
+    }));
 });

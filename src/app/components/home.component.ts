@@ -26,13 +26,11 @@ export class HomeComponent implements OnInit {
     messageText: new FormControl('Angular2'),
   });
 
-  constructor(public store: Store<AppState>) {
+  constructor(public store: Store<AppState>) {}
+
+  ngOnInit() {
     let state = this.store.select('authStore').subscribe((state: any) => {
       this.name = state.username;
     });
-  }
-
-  ngOnInit() {
-    // Our API
   }
 }
