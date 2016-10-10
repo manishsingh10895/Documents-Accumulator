@@ -7,7 +7,6 @@ import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 import { LocationStrategy, HashLocationStrategy } from '@angular/common';
 import { RouterModule, Router } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { HttpModule } from '@angular/http';
 
 // Setup redux with ngrx
 import { Store, StoreModule } from '@ngrx/store';
@@ -35,7 +34,6 @@ import { Authentication } from './services/authentication';
     imports: [
         BrowserModule,
         FormsModule,
-        HttpModule,
         ReactiveFormsModule,
         RouterModule.forRoot(routes, { useHash: true }),
         StoreModule.provideStore({ authStore }, { authStore: authInitialState }),
