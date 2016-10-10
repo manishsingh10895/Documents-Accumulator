@@ -7,6 +7,7 @@
 import '@angular/platform-browser';
 import '@angular/core';
 import '@angular/router';
+import '@angular/http';
 
 // RxJS
 import 'rxjs/add/operator/map';
