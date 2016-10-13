@@ -12,6 +12,12 @@
   ],
   "compileOnSave": false,
   "buildOnSave": false,
-  "atom": { "rewriteTsconfig": false },
-  "allowSyntheticDefaultImports": true
+  "atom": {
+    "rewriteTsconfig": false
+  },
+  "allowSyntheticDefaultImports": true,
+  "awesomeTypescriptLoaderOptions": {
+    "forkChecker": true,
+    "useWebpackText": true
+  }
 }

@@ -12,8 +12,8 @@ import { AppState } from '../../store/appState.store';
 
 @Component({
   selector: 'ae-home',
-  template: require('./home.component.html').toString(),
-  styles: [require('./home.component.scss').toString()],
+  templateUrl: './home.component.html',
+  styleUrls: ['./home.component.scss'],
 })
 export class HomeComponent implements OnInit {
   name: string;

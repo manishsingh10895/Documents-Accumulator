@@ -17,8 +17,8 @@ import { Authentication } from '../../services/authentication';
 
 @Component({
     selector: 'ae-login',
-    template: require('./login.component.html').toString(),
-    styles: [require('./login.component.scss').toString()],
+    templateUrl: './login.component.html',
+    styleUrls: ['./login.component.scss'],
 })
 export class LoginComponent {
     unsubscribe: any;

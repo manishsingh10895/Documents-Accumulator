@@ -64,11 +64,10 @@ var config = {
                 test: /\.json$/,
                 loader: 'json-loader'
             },
-
-            // Support for .scss files.
             {
                 test: /\.scss$/,
-                loaders: ['style', 'css', 'sass']
+                exclude: /node_modules/,
+                loaders: ['raw-loader', 'sass-loader'] // sass-loader not scss-loader
             },
 
             // support for .html antd .css as raw text
