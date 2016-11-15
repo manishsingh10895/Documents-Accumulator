@@ -8,29 +8,21 @@ const helpers = require('./helpers');
 const path = require('path');
 
 const webpackTargetElectronRenderer = require('webpack-target-electron-renderer');
-
-var METADATA = {
-    title: 'Angular2 Minimal Starter',
-    baseUrl: '/',
-    ENV: 'development'
-};
+const LoaderOptionsPlugin = require('webpack/lib/LoaderOptionsPlugin');
 
 /*
  * Config
  */
 var config = {
-    // static data for index.html
-    metadata: METADATA,
     // for faster builds use 'eval'
     devtool: 'source-map',
-    debug: true,
     // cache: false,
 
     // our angular app
     entry: {
         'polyfills': './src/polyfills.ts',
         'vendor': './src/vendor.ts',
-        'app': './src/app/app'
+        'app': './src/app/app',
     },
 
     // Config for our build files
@@ -40,18 +32,30 @@ var config = {
         sourceMapFilename: '[name].map',
         chunkFilename: '[id].chunk.js'
     },
-
+    /*
+    * Options affecting the resolving of modules.
+    *
+    * See: http://webpack.github.io/docs/configuration.html#resolve
+    */
     resolve: {
-        // ensure loader extensions match
-        extensions: helpers.prepend(['.ts', '.js', '.json', '.css', '.html'], '.async') // ensure .async.ts etc also works
-    },
+        /*
+         * An array of extensions that should be used to resolve modules.
+         *
+         * See: http://webpack.github.io/docs/configuration.html#resolve-extensions
+         */
+        extensions: ['.ts', '.js', '.json', '.css', '.html'],
 
+        // An array of directory names to be resolved to the current directory
+        modules: [helpers.root('src'), 'node_modules'],
+
+    },
+    /*
+    * Options affecting the resolving of modules.
+    *
+    * See: http://webpack.github.io/docs/configuration.html#resolve
+    */
     module: {
-        preLoaders: [{
-            test: /\.ts$/,
-            loader: "tslint"
-        }],
-        loaders: [
+        rules: [
             // Support for .ts files.
             {
                 test: /\.ts$/,
@@ -90,11 +94,6 @@ var config = {
             }
         ]
     },
-
-    sassLoader: {
-        includePaths: [path.resolve(__dirname, "./src/app")]
-    },
-
     plugins: [
 
         // Plugin: CommonsChunkPlugin
@@ -104,16 +103,31 @@ var config = {
         // See: https://webpack.github.io/docs/list-of-plugins.html#commonschunkplugin
         // See: https://github.com/webpack/docs/wiki/optimization#multi-page-app
         new webpack.optimize.CommonsChunkPlugin({ name: ['vendor', 'polyfills'], minChunks: Infinity }),
+        /**
+       * Plugin LoaderOptionsPlugin (experimental)
+       *
+       * See: https://gist.github.com/sokra/27b24881210b56bbaff7
+       */
+        new LoaderOptionsPlugin({
+            debug: true,
+            options: {
+                /**
+                 * Static analysis linter for TypeScript advanced options configuration
+                 * Description: An extensible linter for the TypeScript language.
+                 *
+                 * See: https://github.com/wbuchwalter/tslint-loader
+                 */
+                tslint: {
+                    emitErrors: false,
+                    failOnHint: false,
+                    resourcePath: 'src'
+                },
+            }
+        }),
     ],
-    // Other module loader config
-    tslint: {
-        emitErrors: true,
-        failOnHint: false,
-        resourcePath: 'src/*'
-    },
     // we need this due to problems with es6-shim
     node: {
-        global: 'window',
+        global: true,
         progress: false,
         crypto: 'empty',
         module: false,

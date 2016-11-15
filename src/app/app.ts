@@ -20,13 +20,17 @@ import { LoginComponent } from './components/login/login.component';
 import { HomeComponent } from './components/home/home.component';
 import { AppComponent } from './components/app.component';
 
+/**
+ * Import material UI Components
+ */
+import { MaterialModule } from '@angular/material';
+
 import { routes } from './app.routes';
 
 /**
  * Import the authentication service to be injected into our component
  */
 import { Authentication } from './services/authentication';
-
 
 /*
  * provide('AppStore', { useValue: appStore }),
@@ -37,6 +41,7 @@ import { Authentication } from './services/authentication';
         FormsModule,
         ReactiveFormsModule,
         HttpModule,
+        MaterialModule.forRoot(),
         RouterModule.forRoot(routes, { useHash: true }),
         StoreModule.provideStore({ authStore }, { authStore: authInitialState }),
     ],
