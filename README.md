@@ -1,6 +1,6 @@
 # Angular 2 electron app featuring webpack
 
-A working demo of [electron] with [angular2] using [Webpack] and [ngrx]
+A working demo of [electron] with [angular2] using [Webpack], [ngrx] and [material2]
 
 This is a demo of oauth with github using angular 2 and electron. It uses redux to manage state. You should create a config file as following :
 
@@ -39,3 +39,4 @@ $ npm run electron
 [angular2]: http://angular.io
 [electron]: http://electron.atom.io/
 [ngrx]: https://github.com/ngrx/store
+[material2]: https://github.com/angular/material2
