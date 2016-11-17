@@ -1,7 +1,7 @@
 {
-  "name": "angular2-electron",
+  "name": "documentar",
   "version": "0.0.0",
-  "description": "Angular 2 with Electron and Webpack",
+  "description": "See all your favorite documents at once place",
   "main": "",
   "scripts": {
     "watch": "npm run watch:dev",
@@ -16,12 +16,12 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/joaogarin/angular2-electron.git"
+    "url": "c"
   },
-  "author": "joaogarin <github@joaogarin.com>",
+  "author": "Manish Singh",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/joaogarin/angular2-electron/issues"
+    
   },
   "homepage": "",
   "dependencies": {
