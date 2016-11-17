@@ -1,0 +1,34 @@
+input[type="file"] {
+    display: none;
+}
+.custom-file-upload {
+    border: 1px solid #ccc;
+    display: inline-block;
+    padding: 6px 12px;
+    cursor: pointer;
+}
+
+
+.fab-label {
+    box-shadow: 3px 3px 10px grey;
+    background: red;
+    color: white;
+    padding: 20px;
+    border-radius: 50%;
+    transition: all ease 0.3s;
+}
+
+.fab-label:hover {
+    box-shadow: 3px 3px 15px black;
+}
+
+.bottom-right {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+}
+
+.file-card .file-image{
+    max-width: 200px;
+    max-height: 200px;
+}

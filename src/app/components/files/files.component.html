@@ -1,0 +1,62 @@
+<div class="ui top attached demo menu">
+  <a class="item" (click)="toggleSidebar()">
+    <i class="sidebar icon"></i>
+    Folders
+  </a>
+</div>
+<br/>
+
+<div class="ui container">
+  <h3 class="ui center aligned icon header">
+    <i class="circular clone icon"></i>
+    Your Fav Documents
+  </h3>
+</div>
+
+<div class="ui bottom attached segment pushable">
+
+  <div class="ui active inverted dimmer" *ngIf="loading">
+      <div class="ui text loader">Loading</div>
+  </div> 
+
+  <div class="ui inverted labeled icon left inline vertical sidebar menu">
+    <a class="item" (click)="onDirectoryClick('All')">
+      <i class="folder icon"></i>
+      All
+    </a>
+    <a class="item" *ngFor="let dir of directories" (click)="onDirectoryClick(dir)">
+      <i class="folder icon"></i>
+      {{dir.name}}
+    </a>
+  </div>
+
+  <div class="pusher">
+    <div class="ui container">
+      <div class="ui link cards">
+        <div class="card file-card" *ngFor="let file of files" (click)="openFile(file.fullName)">
+          <div class="image file-image">
+            <img src="extra/images/pdf-icon.png">
+          </div>
+          <div class="content">
+            <div class="header">{{file.name}}</div>
+            <div class="description">
+              Important PDF file
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="bottom-right">
+  <div class="add-directory">
+    <label for="file-upload" class="fab-label"  data-tooltip="Add a folder" data-position="left center">
+        <i class="add icon"></i>
+    </label>
+    <input type="file"  id="file-upload"  webkitdirectory (change)="fileChange($event)"/>
+  </div>
+  <div class="ui active inverted dimmer" *ngIf="loading">
+      <div class="ui text loader">Loading</div>
+  </div>
+</div>

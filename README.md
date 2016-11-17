@@ -1,42 +1,12 @@
-# Angular 2 electron app featuring webpack
+# Angular 2 + electron app
+### See you favorite documents at once place
 
-A working demo of [electron] with [angular2] using [Webpack], [ngrx] and [material2]
-
-This is a demo of oauth with github using angular 2 and electron. It uses redux to manage state. You should create a config file as following :
-
-```javascript
-{
-    "github": {
-        "client_id": "yourclientID",
-        "client_secret": "yoursecretkey",
-        "scopes": [
-            "user:email",
-            "notifications"
-        ]
-    }
-}
+### To run
+```sh 
+    git clone https://github.com/manishsingh10895/Documents-Accumulator.git Documentar
+    cd Documentar
+    npm i
+    npm run build
+    npm run electron
 ```
 
-and place this file inside the "app" folder.Dont use this in production as for production you should have a safe server side URI and not have your secret key in the app folder.  
-
-When running it authenticates the user and goes to a page showing the username received from the authentication oauth workflow.
-
-## Run the example
-
-```bash
-$ npm install
-$ npm run build
-$ npm run watch
-$ npm run electron
-```
-
-## License
-
-[MIT]
-
-[Webpack]: http://webpack.github.io
-[MIT]: http://markdalgleish.mit-license.org
-[angular2]: http://angular.io
-[electron]: http://electron.atom.io/
-[ngrx]: https://github.com/ngrx/store
-[material2]: https://github.com/angular/material2

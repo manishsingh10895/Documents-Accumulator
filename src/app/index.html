@@ -2,7 +2,7 @@
 <html lang="">
 
 <head>
-
+    <script src="extra/jquery.js"></script>
     <title>
         Angular 2 Electron
     </title>
@@ -13,6 +13,7 @@
     <meta name="description" content="Simple electron angular2">
 
     <!-- use http://www.favicon-generator.org/ to replace files in public/icon-->
+    <link rel="stylesheet" href="extra/semantic.min.css" />
     <link rel="apple-touch-icon" sizes="57x57" href="/assets/icon/apple-icon-57x57.png">
     <link rel="apple-touch-icon" sizes="60x60" href="/assets/icon/apple-icon-60x60.png">
     <link rel="apple-touch-icon" sizes="72x72" href="/assets/icon/apple-icon-72x72.png">
@@ -40,6 +41,13 @@
         Loading...
     </ae-app>
 
+    <script src="extra/semantic.js"></script>
+    <script>
+    var  jQuery = require('jquery');
+    jQuery('.ui.sidebar')
+  .sidebar('toggle')
+;
+    </script>
     <script src="dist/polyfills.js"></script>
     <script src="dist/vendor.js"></script>
     <script src="dist/app.js"></script>

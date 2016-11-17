@@ -14,6 +14,7 @@ const LoaderOptionsPlugin = require('webpack/lib/LoaderOptionsPlugin');
  * Config
  */
 var config = {
+    externals: { jquery: "jQuery" },
     // for faster builds use 'eval'
     devtool: 'source-map',
     // cache: false,

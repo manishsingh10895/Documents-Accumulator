@@ -1,4 +1,3 @@
-import { AppState } from './../store/appState.store';
 /**
  * Import decorators and services from angular
  */
@@ -16,8 +15,6 @@ import { Component, OnInit } from '@angular/core';
     <div [class.m2app-dark]="isDarkTheme">
         <main>
             <router-outlet></router-outlet>
-            <br/>
-            <button md-raised-button color="primary" (click)="isDarkTheme = !isDarkTheme">TOGGLE THEME</button>
         </main>
     </div>
     `
@@ -29,6 +26,4 @@ export class AppComponent implements OnInit {
     ngOnInit() {
         //check authentication
     }
-
-    checkAuthentication() { }
 }

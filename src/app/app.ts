@@ -11,14 +11,12 @@ import { HttpModule } from '@angular/http';
 
 // Setup redux with ngrx
 import { Store, StoreModule } from '@ngrx/store';
-import { authStore, authInitialState } from './store/auth.store';
 
 /**
  * Import our child components
  */
-import { LoginComponent } from './components/login/login.component';
-import { HomeComponent } from './components/home/home.component';
 import { AppComponent } from './components/app.component';
+import { FilesComponent } from './components/files/files.component';
 
 /**
  * Import material UI Components
@@ -30,8 +28,7 @@ import { routes } from './app.routes';
 /**
  * Import the authentication service to be injected into our component
  */
-import { Authentication } from './services/authentication';
-
+import { FileManager } from './services/fileManager';
 /*
  * provide('AppStore', { useValue: appStore }),
  */
@@ -43,10 +40,9 @@ import { Authentication } from './services/authentication';
         HttpModule,
         MaterialModule.forRoot(),
         RouterModule.forRoot(routes, { useHash: true }),
-        StoreModule.provideStore({ authStore }, { authStore: authInitialState }),
     ],
-    providers: [Authentication],
-    declarations: [AppComponent, HomeComponent, LoginComponent],
+    providers: [FileManager],
+    declarations: [AppComponent, FilesComponent],
     bootstrap: [AppComponent]
 })
 export class AppModule { }
