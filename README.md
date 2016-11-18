@@ -1,6 +1,8 @@
 # Angular 2 + electron app
 ### See you favorite documents at once place
 
+Currenly Supports only pdf files
+
 ### To run
 ```sh 
     git clone https://github.com/manishsingh10895/Documents-Accumulator.git Documentar
