@@ -2,7 +2,7 @@
   "name": "documentar",
   "version": "0.0.0",
   "description": "See all your favorite documents at once place",
-  "main": "",
+  "main": "src/app/main.js",
   "scripts": {
     "watch": "npm run watch:dev",
     "watch:dev": "webpack --watch --progress --profile",
@@ -37,6 +37,7 @@
     "@angular/router": "3.1.0",
     "@ngrx/core": "^1.2.0",
     "@ngrx/store": "^2.2.1",
+    "jquery": "latest",
     "core-js": "^2.4.1",
     "electron": "^1.4.3",
     "rxjs": "^5.0.0-rc.1",

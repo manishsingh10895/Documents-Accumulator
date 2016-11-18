@@ -1,7 +1,9 @@
 import { Component, OnInit, Input, NgZone } from '@angular/core';
 import { FileManager } from '../../services/fileManager';
 const { ipcRenderer } = require('electron');
-const jQuery = require('jquery');
+
+let jQuery = require('jquery');
+
 
 import File from '../../models/file.model';
 import { Directory } from '../../models/directory.model';
@@ -34,8 +36,7 @@ export class FilesComponent {
         });
     }
 
-    constructor(private fileManager: FileManager) {
-
+    constructor(private fileManager: FileManager) { 
         this.zone = new NgZone({enableLongStackTrace: false});
 
         ipcRenderer.on('data-fetched', (err, args)=> {
