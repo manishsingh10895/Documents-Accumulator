@@ -1,23 +1,37 @@
-<div class="ui top attached demo menu">
+<div class="ui fixed demo menu">
   <a class="item" (click)="toggleSidebar()">
     <i class="sidebar icon"></i>
     Folders
   </a>
+  <div class="right menu">
+    <div class="ui button item" tabindex="0" (click)="sort()" >
+        <i class="sort icon" *ngIf="sortType == 0"></i>
+        <i class="sort ascending icon" *ngIf="sortType == 1"></i>
+        <i class="sort descending icon" *ngIf="sortType == -1"></i>
+      Sort 
+    </div>
+
+    <div class="item">
+      <div class="ui transparent icon input">
+        <input type="text" placeholder="Search..." [(ngModel)]="searchText" #searchInput>
+        <i class="search link icon"></i>
+      </div>
+    </div>
+  </div>
 </div>
 <br/>
 
-<div class="ui container">
-  <h3 class="ui center aligned icon header">
-    <i class="circular clone icon"></i>
-    Your Fav Documents
-  </h3>
-</div>
-
-<div class="ui bottom attached segment pushable">
-
+<div class="ui container" style="padding-top: 40px">
+    <h3 class="ui center aligned icon header">
+      <i class="circular clone icon"></i>
+      Your Fav Documents
+    </h3>
+  </div>
   <div class="ui active inverted dimmer" *ngIf="loading">
       <div class="ui loader"></div>
   </div> 
+
+<div class="ui bottom  segment pushable">
 
   <div class="ui inverted labeled icon left inline vertical sidebar menu">
     <a class="item" (click)="onDirectoryClick('All')">
@@ -33,7 +47,7 @@
   <div class="pusher">
     <div class="ui container">
       <div class="ui link cards">
-        <div class="card file-card" *ngFor="let file of files" (click)="openFile(file.fullName)">
+        <div class="card file-card" *ngFor="let file of (files | filter: searchInput.value | sort: sortType )" (click)="openFile(file.fullName)">
           <div class="image file-image">
             <img src="extra/images/pdf-icon.png">
           </div>

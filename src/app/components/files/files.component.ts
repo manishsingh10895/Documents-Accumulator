@@ -1,17 +1,19 @@
 import { Component, OnInit, Input, NgZone } from '@angular/core';
 import { FileManager } from '../../services/fileManager';
+import { FilterPipe } from '../../pipes/filter-files.pipe';
+
 const { ipcRenderer } = require('electron');
 
 let jQuery = require('jquery');
 
 
-import File from '../../models/file.model';
+import { File } from '../../models/file.model';
 import { Directory } from '../../models/directory.model';
-
 
 @Component ({
     selector: 'files',
     templateUrl: './files.component.html',
+
     styleUrls: ['./files.component.scss']
 })
 export class FilesComponent {
@@ -19,8 +21,11 @@ export class FilesComponent {
     directories: Directory[] = [];
     zone:NgZone;
     loading:boolean = false;
+    searchText: String;
+    sortType: Number;
 
     IsDirectoryPresent(fullName) {
+        this.searchText = '';
         this.directories.forEach((item)=> {
             console.log(item.fullName);
             if(item.fullName === fullName) return true;
@@ -36,7 +41,20 @@ export class FilesComponent {
         });
     }
 
-    constructor(private fileManager: FileManager) { 
+    sort() {
+        switch(this.sortType) {
+            case 0: this.sortType = 1; break;
+            case 1: this.sortType = -1; break;
+            case -1: this.sortType = 0; break;
+            default: this.sortType = 0; break;
+        }
+    }
+
+
+
+    constructor(private fileManager: FileManager, private filter: FilterPipe) {
+        this.sortType = 0;
+
         this.zone = new NgZone({enableLongStackTrace: false});
 
         ipcRenderer.on('data-fetched', (err, args)=> {

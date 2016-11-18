@@ -3,8 +3,6 @@
 const fs = require('fs');
 const path = require('path');
 
-console.log(process.env.HOME);
-
 let FindFilesInDirectory = (fileType, dir, done)=> {
   var results = [];
   

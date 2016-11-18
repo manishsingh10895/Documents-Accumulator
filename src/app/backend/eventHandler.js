@@ -29,9 +29,7 @@ let handleDataPersistance = mainWindow => {
 };
 
 let handleFetchFiles = (mainWindow) => {
-    console.log(mainWindow);
     ipcMain.on('fetch-all-files', (err, args)=> {
-        console.log(args);
         FileFinder.findFilesInDirectory('.pdf', args.directory, (err, files, dir)=> {
             let response = { error: null, files: null };
             if(err) mainWindow.send('all-files-fetched', { error: err });

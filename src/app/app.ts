@@ -25,6 +25,9 @@ import { MaterialModule } from '@angular/material';
 
 import { routes } from './app.routes';
 
+// Pipes
+import { FilterPipe } from './pipes/filter-files.pipe';
+import { SortPipe } from './pipes/sort.pipe';
 /**
  * Import the authentication service to be injected into our component
  */
@@ -41,8 +44,8 @@ import { FileManager } from './services/fileManager';
         MaterialModule.forRoot(),
         RouterModule.forRoot(routes, { useHash: true }),
     ],
-    providers: [FileManager],
-    declarations: [AppComponent, FilesComponent],
+    providers: [FileManager, FilterPipe],
+    declarations: [AppComponent, FilesComponent, FilterPipe, SortPipe],
     bootstrap: [AppComponent]
 })
 export class AppModule { }
