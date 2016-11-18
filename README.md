@@ -12,3 +12,13 @@ Currenly Supports only pdf files
     npm run electron
 ```
 
+### Issues 
+
+  If you get error in browserWindow's console **cannot find module jQuery** 
+  
+  RUN
+  ```sh
+    npm install --save jquery
+  ```
+  this may ruin webpack but still run **npm run build** 
+
