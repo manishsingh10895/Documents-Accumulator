@@ -68,7 +68,7 @@
     <label for="file-upload" class="fab-label" data-tooltip="Add a folder" data-position="left center">
         <i class="add icon"></i>
     </label>
-    <input type="file"  id="file-upload"  webkitdirectory (change)="fileChange($event)"/>
+    <input type="file"  id="file-upload" #folderInput  webkitdirectory (change)="fileChange($event)"/>
   </div>
   <div class="ui active inverted dimmer" *ngIf="loading">
       <div class="ui text loader">Loading</div>

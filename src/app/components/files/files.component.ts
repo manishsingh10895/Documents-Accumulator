@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, NgZone } from '@angular/core';
+import { Component, ElementRef, OnInit, Input, NgZone, ViewChild } from '@angular/core';
 import { FileManager } from '../../services/fileManager';
 import { FilterPipe } from '../../pipes/filter-files.pipe';
 
@@ -16,13 +16,26 @@ import { Directory } from '../../models/directory.model';
 
     styleUrls: ['./files.component.scss']
 })
-export class FilesComponent {
+export class FilesComponent implements OnInit {
+    @ViewChild('searchInput') searchElement: ElementRef;
+    @ViewChild('folderInput') folderElement: ElementRef;
+
     @Input() files: File[] = [];
     directories: Directory[] = [];
     zone:NgZone;
     loading:boolean = false;
     searchText: String;
     sortType: Number;
+
+    ngOnInit() {
+        document.onkeydown = (e) => {
+            if(e.keyCode==78 && e.ctrlKey) this.folderElement.nativeElement.click();
+            if(e.keyCode==68 && e.ctrlKey) this.toggleSidebar();
+            if(e.keyCode==70 && e.ctrlKey) this.searchElement.nativeElement.focus();
+        };  
+    }
+
+
 
     IsDirectoryPresent(fullName) {
         this.searchText = '';
@@ -50,11 +63,12 @@ export class FilesComponent {
         }
     }
 
-
+    onSearchKeyPress() {
+        
+    }
 
     constructor(private fileManager: FileManager, private filter: FilterPipe) {
         this.sortType = 0;
-
         this.zone = new NgZone({enableLongStackTrace: false});
 
         ipcRenderer.on('data-fetched', (err, args)=> {
