@@ -1,0 +1,10 @@
+<div class="ui inverted labeled icon left inline vertical sidebar menu">
+    <a class="item" (click)="onDirectoryClick('All')">
+      <i class="folder icon"></i>
+      All
+    </a>
+    <a class="item" *ngFor="let dir of directories" (click)="onDirectoryClick(dir)">
+      <i class="folder icon"></i>
+      {{dir.name}}
+    </a>
+</div>

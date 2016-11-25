@@ -1,0 +1,22 @@
+<div class="ui fixed demo menu">
+  <a class="item" (click)="onToggleSidebar()">
+    <i class="sidebar icon"></i>
+    Folders
+  </a>
+  <div class="right menu">
+    <div class="ui button item" tabindex="0" (click)="sort()" >
+        <i class="sort icon" *ngIf="sortType == 0"></i>
+        <i class="sort ascending icon" *ngIf="sortType == 1"></i>
+        <i class="sort descending icon" *ngIf="sortType == -1"></i>
+      Sort 
+    </div>
+
+    <div class="item">
+      <div class="ui transparent icon input">
+        <input type="text" placeholder="Search..." #searchInput (keyup)="onSearchTextChange(searchInput.value)" />
+        <i class="search link icon"></i>
+      </div>
+    </div>
+  </div>
+</div>
+<br/>

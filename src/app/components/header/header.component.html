@@ -1,0 +1,52 @@
+<div class="header-main">
+    <h3 class="ui header center aligned">
+          Your Fav Documents
+      </h3>
+  <div class="ui five equal width center aligned column grid" id="fileTypeGrid">
+      <div class="centered column">
+          <button class="ui circular toggle massive icon button" 
+            [ngClass]="{ 'active' : fileTypes['presentation'].selected }"
+            data-tooltip="Presentation"
+            data-position="bottom center" 
+            (click)="toggleFileType('presentation')" >
+              <i class="file large powerpoint outline icon"></i>
+          </button>
+      </div>
+      <div class="centered column">
+          <button class="ui circular toggle massive icon button"
+            [ngClass]="{ 'active' : fileTypes['word'].selected }" 
+            data-tooltip="Word Document"
+            data-position="bottom center" (click)="toggleFileType('word')" 
+           >
+              <i class="file big word outline icon"></i>
+          </button>
+      </div>
+      <div class="centered column">
+          <button class="ui circular toggle massive icon button"
+            data-tooltip="All Documents"
+            [ngClass]="{ 'active' : fileTypes['all'].selected }" 
+            data-position="bottom center" (click)="toggleFileType('all')" >      
+              <i class="file big clone icon"></i>
+          </button>
+      </div>
+      <div class="centered column">
+          <button class="ui circular toggle massive icon button" 
+            [ngClass]="{ 'active' : fileTypes['pdf'].selected }"
+            data-tooltip="PDF Documents" (click)="toggleFileType('pdf')"
+            data-position="bottom center" 
+           >
+              <i class="file big pdf outline icon"></i>
+          </button>
+      </div>
+      <div class="centered column">
+          <button class="ui circular toggle massive icon button" 
+            [ngClass]="{ 'active' : fileTypes['spreadsheet'].selected }" 
+            data-tooltip="Spreadsheets" 
+            (click)="toggleFileType('spreadsheet')"
+            data-position="bottom center"  
+            >
+              <i class="file large excel outline icon"></i>
+          </button>
+      </div>
+  </div>      
+</div>

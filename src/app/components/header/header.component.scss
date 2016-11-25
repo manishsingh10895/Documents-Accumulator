@@ -1,0 +1,27 @@
+$button-border-color: #483434;
+$active-button-color: #10a1d8;
+
+.header-main {
+    padding-top: 40px;
+    background: #e0e1e2;
+}
+
+#fileTypeGrid .button {
+    border: 3px solid transparent;
+    transition: all 0.3s cubic-bezier(0.19, 1, 0.22, 1);
+
+    &:hover {
+        border: 3px solid $button-border-color
+    }
+}
+
+#fileTypeGrid .active {
+    background-color: $active-button-color !important;
+    &:hover {
+        background-color: darken($color: ($active-button-color), $amount: 10) !important;
+        border: 3px solid darken($color: $active-button-color, $amount: 20);
+    }
+}
+
+
+
