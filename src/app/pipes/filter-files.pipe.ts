@@ -5,8 +5,6 @@ import { File } from '../models/file.model';
 @Injectable()
 export class FilterPipe implements PipeTransform{
     transform(items: File[], args:string): any {
-        console.log(items);
-        console.log(args);
         var res = items.filter((item)=> {
             try {
                 let reg = new RegExp(args.toLowerCase());
@@ -15,7 +13,6 @@ export class FilterPipe implements PipeTransform{
                 console.log(ex);
                 return true;
             }
-        
          });
         console.log(res); 
         return res;

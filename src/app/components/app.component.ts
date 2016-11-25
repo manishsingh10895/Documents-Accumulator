@@ -2,7 +2,7 @@
  * Import decorators and services from angular
  */
 import { Component, OnInit } from '@angular/core';
-
+const { ipcRenderer } = require('electron');
 /*
  * App Component
  * Top Level Component
@@ -22,6 +22,8 @@ import { Component, OnInit } from '@angular/core';
 export class AppComponent implements OnInit {
     //component initialization
     isDarkTheme: boolean = false;
+
+
 
     ngOnInit() {
         //check authentication

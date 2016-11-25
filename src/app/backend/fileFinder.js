@@ -27,7 +27,16 @@ let FindFilesInDirectory = (fileType, dir, done)=> {
             next();
           });
         } else {
-            if(file.indexOf(fileType)>=0) results.push({ name: fileName, fullName: fullFileName, extension: extension });
+            if(fileType.constructor == Array) {
+                console.log("Array");
+                fileType.forEach((item) => {
+                    console.log(file, item);
+                    if(file.indexOf(item) >= 0)
+                        results.push({ name: fileName, fullName: fullFileName, extension: extension });
+                })
+            } else { 
+                if(file.indexOf(fileType)>=0) results.push({ name: fileName, fullName: fullFileName, extension: extension });
+            }
             next();
         }
       });

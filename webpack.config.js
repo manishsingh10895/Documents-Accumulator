@@ -14,7 +14,22 @@ const LoaderOptionsPlugin = require('webpack/lib/LoaderOptionsPlugin');
  * Config
  */
 var config = {
-    externals: { jquery: "jQuery" },
+    externals: [
+        { jquery: "jQuery" },
+         (function () {
+        var IGNORES = [
+            'electron',
+            'chokidar',
+            //any node specific packages, e.g. 'mongoose' or 'mssql'
+        ];
+        return function (context, request, callback) {
+            if (IGNORES.indexOf(request) >= 0) {
+            return callback(null, "require('" + request + "')");
+            }
+            return callback();
+        };
+        })()
+    ],
     // for faster builds use 'eval'
     devtool: 'source-map',
     // cache: false,
@@ -140,5 +155,5 @@ var config = {
 /**
  * Target Electron
  */
-config.target = webpackTargetElectronRenderer(config);
+// config.target = webpackTargetElectronRenderer(config);
 module.exports = config;

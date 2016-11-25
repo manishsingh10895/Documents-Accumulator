@@ -17,7 +17,10 @@ import { Store, StoreModule } from '@ngrx/store';
  */
 import { AppComponent } from './components/app.component';
 import { FilesComponent } from './components/files/files.component';
-
+import { HeaderComponent } from './components/header/header.component';
+import { MenuComponent } from './components/menu/menu.component';
+import { FileComponent } from './components/file/file.component';
+import { SidebarComponent } from './components/sidebar/sidebar.component'; 
 /**
  * Import material UI Components
  */
@@ -28,10 +31,13 @@ import { routes } from './app.routes';
 // Pipes
 import { FilterPipe } from './pipes/filter-files.pipe';
 import { SortPipe } from './pipes/sort.pipe';
+import { IconPipe } from './pipes/icon.pipe';
+import { FileTypePipe } from './pipes/fileType.pipe';
 /**
  * Import the authentication service to be injected into our component
  */
 import { FileManager } from './services/fileManager';
+import { Utility } from './services/utility';
 /*
  * provide('AppStore', { useValue: appStore }),
  */
@@ -44,8 +50,14 @@ import { FileManager } from './services/fileManager';
         MaterialModule.forRoot(),
         RouterModule.forRoot(routes, { useHash: true }),
     ],
-    providers: [FileManager, FilterPipe],
-    declarations: [AppComponent, FilesComponent, FilterPipe, SortPipe],
+    providers: [FileManager, FilterPipe, Utility],
+    declarations: [
+        AppComponent, FilesComponent, 
+        FilterPipe, SortPipe, IconPipe,
+        FileTypePipe, HeaderComponent,
+        FileComponent, SidebarComponent,
+        MenuComponent
+    ],
     bootstrap: [AppComponent]
 })
 export class AppModule { }

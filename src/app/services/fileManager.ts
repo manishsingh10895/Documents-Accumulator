@@ -17,6 +17,7 @@ export class FileManager {
 
     persistData() {
         console.log("Data Persitence");
+        console.log(this.fileStructure);
         ipcRenderer.send('save-data', { data: JSON.stringify(this.fileStructure) });
     }
 

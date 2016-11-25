@@ -1,8 +1,9 @@
 /**
  * Include our app
  */
-const {app, BrowserWindow } = require('electron');
+const {app, BrowserWindow, Menu } = require('electron');
 const  backend = require('./backend'); 
+const augurypath = "/home/hp/.config/google-chrome/Default/Extensions/elgalmkoelokbchhkhacckoklkejnhcd/1.2.5_0";
 
 // browser-window creates a native window
 let mainWindow = null;
@@ -17,19 +18,19 @@ app.on('window-all-closed', () => {
 
 const createWindow = () => {
 
-  
-
   // Initialize the window to our specified dimensions
+  
   mainWindow = new BrowserWindow({ width: 1200, height: 900 });
-
+  // makeMenu();
   // Set Event Handlers
   backend.EventHandler(mainWindow);
-
+  
   // Tell Electron where to load the entry point from
   mainWindow.loadURL('file://' + __dirname + '/index.html');
 
   // Open the DevTools.
-  // mainWindow.webContents.openDevTools();
+  mainWindow.webContents.openDevTools();
+  
 
   // Clear out the main window when the app is closed
   mainWindow.on('closed', () => {
@@ -46,3 +47,20 @@ app.on('activate', () => {
     createWindow();
   }
 });
+
+let makeMenu = () => {
+  const template = [
+    {
+      label: 'View',
+      submenu: [
+        {
+          label: 'Key Bindings',
+          click() { mainWindow.send('open-bindings'); }
+        }
+      ]
+    }
+  ];
+
+  const menu = Menu.buildFromTemplate(template);
+  Menu.setApplicationMenu(menu);
+};

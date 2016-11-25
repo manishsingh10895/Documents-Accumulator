@@ -28,9 +28,11 @@ let handleDataPersistance = mainWindow => {
     });
 };
 
+let fileTypes = ['.pdf', '.doc', '.odt', 'docx', '.xls', '.xlsx', '.ods'];
+
 let handleFetchFiles = (mainWindow) => {
     ipcMain.on('fetch-all-files', (err, args)=> {
-        FileFinder.findFilesInDirectory('.pdf', args.directory, (err, files, dir)=> {
+        FileFinder.findFilesInDirectory(fileTypes, args.directory, (err, files, dir)=> {
             let response = { error: null, files: null };
             if(err) mainWindow.send('all-files-fetched', { error: err });
 

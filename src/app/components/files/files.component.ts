@@ -1,11 +1,16 @@
-import { Component, ElementRef, OnInit, Input, NgZone, ViewChild } from '@angular/core';
+import { Component, ElementRef, 
+        AfterContentInit, ContentChild, 
+        OnInit, Input, 
+        NgZone, ViewChild
+    } from '@angular/core';
 import { FileManager } from '../../services/fileManager';
 import { FilterPipe } from '../../pipes/filter-files.pipe';
+import { Utility } from '../../services/utility';
+import { MenuComponent } from '../menu/menu.component';
 
 const { ipcRenderer } = require('electron');
 
 let jQuery = require('jquery');
-
 
 import { File } from '../../models/file.model';
 import { Directory } from '../../models/directory.model';
@@ -13,67 +18,121 @@ import { Directory } from '../../models/directory.model';
 @Component ({
     selector: 'files',
     templateUrl: './files.component.html',
-
     styleUrls: ['./files.component.scss']
 })
-export class FilesComponent implements OnInit {
-    @ViewChild('searchInput') searchElement: ElementRef;
+
+export class FilesComponent implements OnInit, AfterContentInit {
     @ViewChild('folderInput') folderElement: ElementRef;
+    @ViewChild(MenuComponent) menuComponent: MenuComponent;
 
     @Input() files: File[] = [];
     directories: Directory[] = [];
     zone:NgZone;
     loading:boolean = false;
-    searchText: String;
+    searchText: String = '';
     sortType: Number;
+    selectedFileTypes:string[] = [];
 
     ngOnInit() {
-        document.onkeydown = (e) => {
+        
+    }
+
+    ngAfterContentInit() {
+        this.setShortcuts();
+    }
+
+    constructor(private fileManager: FileManager, private filter: FilterPipe, private utility: Utility) {
+        this.sortType = 0;
+        this.zone = new NgZone({enableLongStackTrace: false});
+        this.setRendererEventhandlers();
+        this.setUpInitialData();
+    }
+
+    moveToTop() {
+        let x = 1;
+        let frame = () => { 
+            if(document.body.scrollTop == 0) clearInterval(interval);
+            x++;
+            document.body.scrollTop-= x*5;
+        }
+
+        let interval = setInterval(frame, 1);
+    }
+
+    //Set keyboard shortcuts
+    setShortcuts() {
+        document.addEventListener('keydown', (e) => {
             if(e.keyCode==78 && e.ctrlKey) this.folderElement.nativeElement.click();
             if(e.keyCode==68 && e.ctrlKey) this.toggleSidebar();
-            if(e.keyCode==70 && e.ctrlKey) this.searchElement.nativeElement.focus();
-        };  
-    }
-
-
-
-    IsDirectoryPresent(fullName) {
-        this.searchText = '';
-        this.directories.forEach((item)=> {
-            console.log(item.fullName);
-            if(item.fullName === fullName) return true;
+            if(e.keyCode==84 && e.ctrlKey) this.moveToTop();
         });
-        return false;
+        // this.headerComponent.setShortcuts();
+        this.menuComponent.handleShortcuts.emit();
     }
 
+    //Initialise data
     setUpInitialData() {
         Object.keys(this.fileManager.fileStructure).forEach(key => {
-            console.log(key);
-            this.directories.push({ fullName: key, name: this.extractDirectory(key) });
+            this.directories.push({ fullName: key, name: this.utility.extractDirectory(key) });
             this.files = this.files.concat(this.fileManager.fileStructure[key]);
         });
     }
 
-    sort() {
-        switch(this.sortType) {
-            case 0: this.sortType = 1; break;
-            case 1: this.sortType = -1; break;
-            case -1: this.sortType = 0; break;
-            default: this.sortType = 0; break;
+    updateSortType(type) {
+        this.sortType = type;
+    }
+
+    updateFileTypes(fileTypes) {
+        this.selectedFileTypes = fileTypes;
+    }
+
+    updateSearchText(text:string) {
+        this.searchText = text;
+    }
+
+    toggleSidebar() {
+        jQuery('.ui.sidebar')
+        .sidebar('toggle')
+        ;
+    }
+
+    openFile(path) {
+        ipcRenderer.send('open-pdf-file', { filePath: path });
+    }
+
+    private AddAllFiles() {
+        
+        this.files = [];
+        this.directories.forEach((item)=> {
+            this.files = this.files.concat(this.fileManager.fileStructure[item.fullName]);
+        });
+    }
+
+    onAddFiles(directory:any) {
+        if(directory == 'All') { this.AddAllFiles(); this.toggleSidebar(); return; }
+        
+        this.files = this.fileManager.fileStructure[directory.fullName];
+        this.toggleSidebar();
+    }
+
+    fileChange(e) {
+        let directory = e.target.files[0].path;
+        let directoryName = this.utility.extractDirectory(directory);
+        
+        if(jQuery.inArray(directoryName, this.directories) == -1) {
+            ipcRenderer.send('fetch-all-files', { directory: directory });
+            this.loading = true;
+            
+            jQuery('.add-directory')
+            .transition('scale')
+            ;
         }
     }
 
-    onSearchKeyPress() {
-        
-    }
-
-    constructor(private fileManager: FileManager, private filter: FilterPipe) {
-        this.sortType = 0;
-        this.zone = new NgZone({enableLongStackTrace: false});
-
-        ipcRenderer.on('data-fetched', (err, args)=> {
+    // Handle electron's renderer thread events
+    setRendererEventhandlers() {
+         ipcRenderer.on('data-fetched', (err, args)=> {
             if(args.error) return console.log(args.error);
-            console.log(args);
             this.zone.run(()=> {
                 this.fileManager.fileStructure = args.data;
                 this.setUpInitialData();
@@ -81,10 +140,9 @@ export class FilesComponent implements OnInit {
         });
 
         ipcRenderer.on('all-files-fetched', (e,args) => {
-            this.zone.run(()=> {
-                
+            this.zone.run(()=> {                
                 let fullDirectory = args.directory;
-                let directory = this.extractDirectory(fullDirectory);
+                let directory = this.utility.extractDirectory(fullDirectory);
                                 
                 this.files = args.files;
                 this.directories.push({ name: directory, fullName: fullDirectory});
@@ -99,50 +157,5 @@ export class FilesComponent implements OnInit {
                 this.fileManager.persistData();
             });
         });
-    }
-
-    toggleSidebar() {
-        jQuery('.ui.sidebar')
-        .sidebar('toggle')
-        ;
-    }
-
-    openFile(path) {
-
-        ipcRenderer.send('open-pdf-file', { filePath: path });
-    }
-
-    extractDirectory(path:string) {
-        let x = path.split('/');
-        return x[x.length-1];
-    }
-
-    private AddAllFiles() {
-        this.files = [];
-        this.directories.forEach((item)=> {
-            this.files = this.files.concat(this.fileManager.fileStructure[item.fullName]);
-        });
-    }
-
-    onDirectoryClick(directory:any) {
-        if(directory == 'All') { this.AddAllFiles(); this.toggleSidebar(); return; }
-        console.log(this.fileManager);
-        console.log(directory.fullName);
-        
-        this.files = this.fileManager.fileStructure[directory.fullName];
-        this.toggleSidebar();
-    }
-
-    fileChange(e) {
-        let directory = e.target.files[0].path;
-        let directoryName = this.extractDirectory(directory);
-        
-        if(jQuery.inArray(directoryName, this.directories) == -1) {
-            ipcRenderer.send('fetch-all-files', { directory: directory });
-            this.loading = true;
-            jQuery('.add-directory')
-            .transition('scale')
-            ;
-        }
     }
 }

@@ -22,6 +22,9 @@ input[type="file"] {
     box-shadow: 3px 3px 15px black;
 }
 
+.cards-list {
+    padding-top: 20px;
+}
 
 .bottom-right {
     position: fixed;
@@ -30,6 +33,11 @@ input[type="file"] {
 }
 
 .file-card .file-image{
+    max-width: 200px;
+    max-height: 200px;
+}
+
+.ext-icon {
     max-width: 200px;
     max-height: 200px;
 }
