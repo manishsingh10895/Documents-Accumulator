@@ -1,9 +1,17 @@
-    <div class="image file-image">
-        <img src="extra/images/{{file.extension | icon}}" class="ext-icon">
+    <div class="content">
+        <div>
+            <div class="content">
+                <button class="ui right floated circular red icon button" (click)="deleteFile()">
+                    <i class="trash icon"></i>
+                </button>
+                <img class="ui huge avatar image" src="extra/images/{{file.extension | icon}}">
+                 <span class="file-name center aligned">{{file.name | fileName: 20 }}</span>
+            </div>
+        </div>
     </div>
     <div class="content">
-        <div class="header">{{file.name}}</div>
-        <div class="description">
-        Important {{file.extension}} files 
-        </div>
+        <span class="right floated">
+            <i class="star yellow large icon" [ngClass]="{ 'empty': !file.isFavorite }" (click)="toggleFavorite($event)" ></i>
+        </span>
+        {{file.size}} MB
     </div>

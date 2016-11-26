@@ -72,6 +72,11 @@ export class FilesComponent implements OnInit, AfterContentInit {
 
     //Initialise data
     setUpInitialData() {
+        this.updateData();
+    }
+
+    updateData() {
+        this.files = [];
         Object.keys(this.fileManager.fileStructure).forEach(key => {
             this.directories.push({ fullName: key, name: this.utility.extractDirectory(key) });
             this.files = this.files.concat(this.fileManager.fileStructure[key]);

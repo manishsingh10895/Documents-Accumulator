@@ -3,6 +3,7 @@ import { Component, OnInit, Input, EventEmitter, ViewChild, ElementRef } from '@
 @Component({
     selector: 'app-menu',
     templateUrl: './menu.component.html',
+    styleUrls: ['./menu.component.scss'],
     outputs: ['updateSortType', 'updateSearchText', 'toggleSidebar'],
 })
 export class MenuComponent implements OnInit {

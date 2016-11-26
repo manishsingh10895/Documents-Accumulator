@@ -25,7 +25,18 @@ export class AppComponent implements OnInit {
 
 
 
+
     ngOnInit() {
         //check authentication
+        document.body.addEventListener('click', e => {
+            let button = e.which || e.button;
+            if(button == 1) {
+                document.getElementById('context-menu').classList.remove('active');
+            }
+        });
+
+        document.addEventListener('keydown', e => {
+            if(e.keyCode == 27)  document.getElementById('context-menu').classList.remove('active');
+        });
     }
 }

@@ -3,7 +3,7 @@
 const fs = require('fs');
 const path = require('path');
 
-let FindFilesInDirectory = (fileType, dir, done)=> {
+let FindFilesInDirectory = (fileType, dir, sourceDir, done)=> {
   var results = [];
   
   fs.readdir(dir, function(err, list) {
@@ -16,26 +16,40 @@ let FindFilesInDirectory = (fileType, dir, done)=> {
     (function next() {
       var file = list[i++];
       let fileName = file;
+
       if (!file) return done(null, results, dir);
+
       file = path.resolve(dir, file);
       let fullFileName = file;
       let extension = path.extname(fullFileName);
+
       fs.stat(file, function(err, stat) {
         if (stat && stat.isDirectory()) {
-          FindFilesInDirectory(fileType, file, function(err, res) {
+
+          FindFilesInDirectory(fileType, file, sourceDir, function(err, res) {
             results = results.concat(res);
             next();
           });
+
         } else {
+            let size = ByteToMegaByte(stat['size']);
+
+            let fileObject = { 
+                        name: fileName,
+                        fullName: fullFileName,
+                        extension: extension,
+                        size: size, 
+                        isFavorite: false,
+                        directory: sourceDir
+            };
+
             if(fileType.constructor == Array) {
-                console.log("Array");
                 fileType.forEach((item) => {
-                    console.log(file, item);
                     if(file.indexOf(item) >= 0)
-                        results.push({ name: fileName, fullName: fullFileName, extension: extension });
+                        results.push(fileObject);
                 })
             } else { 
-                if(file.indexOf(fileType)>=0) results.push({ name: fileName, fullName: fullFileName, extension: extension });
+                if(file.indexOf(fileType)>=0) results.push(fileObject);
             }
             next();
         }
@@ -44,6 +58,10 @@ let FindFilesInDirectory = (fileType, dir, done)=> {
   });
 };
 
+
+let ByteToMegaByte = (bytes) =>  {
+    return Math.round((bytes/1048576) * 100) / 100;
+}
 
 let FindFileTypesInDirectory = (fileType, dir, cb) => {
     var files = [];

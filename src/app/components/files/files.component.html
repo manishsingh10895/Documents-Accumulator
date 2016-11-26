@@ -20,10 +20,11 @@
     <div class="ui container">
       <div class="ui link cards cards-list">
         <!--Files list-->
-        <app-file class="card file-card" 
+        <app-file class="ui centered card  file-card" 
           [file]=file 
           *ngFor="let file of (files | filter: searchText | fileType: selectedFileTypes | sort : sortType)" 
           (click)="openFile(file.fullName)"
+          (onUpdate)="updateData()"
         ></app-file>
         <!--Files List-->
       </div>

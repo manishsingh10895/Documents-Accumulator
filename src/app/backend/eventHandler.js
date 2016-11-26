@@ -4,12 +4,29 @@ const { ipcMain } = require('electron');
 const { spawn }  = require('child_process');
 const FileFinder = require('./fileFinder');
 const DataManager = require('./dataManager');
+const FileCrud = require('./fileCrud');
 const { shell } = require('electron');
 
 
 let handleEvents = (mainWindow) => {
     handleFetchFiles(mainWindow);
-    handleDataPersistance(mainWindow); 
+    handleDataPersistance(mainWindow);
+    handleOpenLocation(mainWindow); 
+    handleFileDeletion(mainWindow);
+};
+
+let handleFileDeletion = mainWindow => {
+    ipcMain.on('delete-file', (err, args) => {
+        FileCrud.deleteFile(args.filepath, (err)=> {
+            if(err) console.log(err);
+        });
+    });
+};
+
+let handleOpenLocation = mainWindow => {
+    ipcMain.on('open-file-location', (err, args) => {
+        shell.showItemInFolder(args.filepath);
+    });
 };
 
 let handleDataPersistance = mainWindow => {
@@ -32,7 +49,7 @@ let fileTypes = ['.pdf', '.doc', '.odt', 'docx', '.xls', '.xlsx', '.ods'];
 
 let handleFetchFiles = (mainWindow) => {
     ipcMain.on('fetch-all-files', (err, args)=> {
-        FileFinder.findFilesInDirectory(fileTypes, args.directory, (err, files, dir)=> {
+        FileFinder.findFilesInDirectory(fileTypes, args.directory, args.directory, (err, files, dir)=> {
             let response = { error: null, files: null };
             if(err) mainWindow.send('all-files-fetched', { error: err });
 

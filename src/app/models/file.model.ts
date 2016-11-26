@@ -3,4 +3,6 @@ export interface File {
     extension: string;
     fullName: string;
     iconImage: string;
+    isFavorite: boolean;
+    directory: string;
 }

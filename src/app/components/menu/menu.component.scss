@@ -1,0 +1,14 @@
+#context .context-menu {
+  position: absolute;
+  z-index: 10;
+}
+
+#context .context-menu {
+  display: none;
+  position: absolute;
+  z-index: 10;
+}
+
+#context .active {
+  display: block;
+}

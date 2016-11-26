@@ -33,6 +33,7 @@ import { FilterPipe } from './pipes/filter-files.pipe';
 import { SortPipe } from './pipes/sort.pipe';
 import { IconPipe } from './pipes/icon.pipe';
 import { FileTypePipe } from './pipes/fileType.pipe';
+import { FileNamePipe } from './pipes/fileName.pipe';
 /**
  * Import the authentication service to be injected into our component
  */
@@ -56,7 +57,7 @@ import { Utility } from './services/utility';
         FilterPipe, SortPipe, IconPipe,
         FileTypePipe, HeaderComponent,
         FileComponent, SidebarComponent,
-        MenuComponent
+        MenuComponent, FileNamePipe
     ],
     bootstrap: [AppComponent]
 })
