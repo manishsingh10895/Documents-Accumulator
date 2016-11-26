@@ -77,6 +77,7 @@ export class FilesComponent implements OnInit, AfterContentInit {
 
     updateData() {
         this.files = [];
+        this.directories = [];
         Object.keys(this.fileManager.fileStructure).forEach(key => {
             this.directories.push({ fullName: key, name: this.utility.extractDirectory(key) });
             this.files = this.files.concat(this.fileManager.fileStructure[key]);
@@ -106,16 +107,26 @@ export class FilesComponent implements OnInit, AfterContentInit {
     }
 
     private AddAllFiles() {
-        
         this.files = [];
         this.directories.forEach((item)=> {
             this.files = this.files.concat(this.fileManager.fileStructure[item.fullName]);
         });
     }
 
+    private AddFavorites() {
+        this.files = [];
+        this.directories.forEach((item)=> {
+            this.files = this.files.concat(this.fileManager.fileStructure[item.fullName]
+                                .filter((file:File)=> {
+                                    return file.isFavorite;
+                                }));
+        });
+    }
+
     onAddFiles(directory:any) {
         if(directory == 'All') { this.AddAllFiles(); this.toggleSidebar(); return; }
-        
+        if(directory == 'favorite') { this.AddFavorites(); this.toggleSidebar(); return; }
+
         this.files = this.fileManager.fileStructure[directory.fullName];
         this.toggleSidebar();
     }

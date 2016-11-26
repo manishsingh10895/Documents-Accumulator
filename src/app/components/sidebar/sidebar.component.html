@@ -3,6 +3,9 @@
       <i class="folder icon"></i>
       All
     </a>
+    <a class="item" (click)="onDirectoryClick('favorite')">
+      <i class="star icon"></i> Favorites
+    </a>
     <a class="item" *ngFor="let dir of directories" (click)="onDirectoryClick(dir)">
       <i class="folder icon"></i>
       {{dir.name}}

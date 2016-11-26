@@ -1,7 +1,7 @@
     <div class="content">
         <div>
             <div class="content">
-                <button class="ui right floated circular red icon button" (click)="deleteFile()">
+                <button class="ui right floated circular red icon button" (click)="deleteFile($event)">
                     <i class="trash icon"></i>
                 </button>
                 <img class="ui huge avatar image" src="extra/images/{{file.extension | icon}}">

@@ -1,8 +1,9 @@
-import { Component, Input, OnInit, ElementRef, EventEmitter } from '@angular/core';
+import { NgZone, Component, Input, OnInit, ElementRef, EventEmitter } from '@angular/core';
 import { File } from '../../models/file.model';
 import { FileManager } from '../../services/fileManager';
 import { Utility } from '../../services/utility';
 const { ipcRenderer } = require('electron');
+const { dialog } = require('electron').remote;
 
 @Component({
     selector: 'app-file',
@@ -18,7 +19,7 @@ export class FileComponent implements OnInit{
 
     }
 
-    constructor(private el: ElementRef, private fileManager: FileManager, private utility: Utility) {
+    constructor(private el: ElementRef, private fileManager: FileManager, private utility: Utility, private zone: NgZone) {
         this.el.nativeElement.addEventListener('contextmenu', e => {
             this.handleContextMenu(e);
         });
@@ -95,17 +96,45 @@ export class FileComponent implements OnInit{
         }
     }
 
-    deleteFile() {
-        ipcRenderer.send('delete-file', { filepath: this.file.fullName });
-        this.fileManager.fileStructure[this.file.directory]
-            .forEach((item:File, index)=> {
-                if(item.fullName == this.file.fullName) {
-                    this.fileManager.fileStructure[this.file.directory].splice(index, 1);
-                    this.fileManager.persistData();
-                }
-            });
+    deleteFile(e: Event) {
+        e.preventDefault();
+        e.stopPropagation();
+
+        let dialogOptions = { 
+            type: 'question',
+            title: 'Confirm Delete',
+            buttons: ['Delete', 'Cancel'],
+            defaultId: 1,
+            cancelId: 2,
+            message: "Are your sure to delete the file"
+        };
+
+        let callback = (index) => {
+            switch(index) {
+                case 0: this.sendDeleteFileSignal(); break;
+                case 1: break;
+                default: break;
+            }
+        }
+
+        dialog.showMessageBox(dialogOptions, callback);
 
         this.onUpdate.emit();
+    }
+
+    private sendDeleteFileSignal() {
+        this.zone.run(()=> {
+            ipcRenderer.send('delete-file', { filepath: this.file.fullName });
+            this.fileManager.fileStructure[this.file.directory]
+                .forEach((item:File, index)=> {
+                    if(item.fullName == this.file.fullName) {
+                        this.fileManager.fileStructure[this.file.directory].splice(index, 1);
+                        this.fileManager.persistData();
+                    }
+                });
+
+            this.onUpdate.emit();
+        });
     }
 
     toggleFavorite(e: Event) {
