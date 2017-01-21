@@ -11,6 +11,17 @@ Currenly Supports pdf, excel, powerpoint, word files
     npm run build
     npm run electron
 ```
+### Features
+  - Shortcuts 
+    - Ctrl + D - Open Sidebar
+    - Ctrl + F - Search
+    - Ctrl + S - Sort
+    - Ctrl + N - Add Folder
+  
+  - Left Click to open the file from the application itself
+  - Right Click to open file location
+  
+  
 
 ### Issues 
 
