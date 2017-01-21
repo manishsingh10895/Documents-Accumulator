@@ -1,7 +1,7 @@
 # Angular 2 + electron app
 ### See you favorite documents at once place
 
-Currenly Supports only pdf files
+Currenly Supports pdf, excel, powerpoint, word files
 
 ### To run
 ```sh 
